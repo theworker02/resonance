@@ -1,0 +1,62 @@
+cff-version: 1.2.0
+message: >
+  If you use Resonance in your research or build on its protocol specification,
+  please cite it using the metadata below.
+
+title: "Resonance: A Privacy-First Acoustic Incident Detection Platform"
+type: software
+
+version: "4.0.0"
+date-released: "2025-08-25"
+
+abstract: >
+  Resonance is an open-source distributed acoustic incident detection platform
+  designed for privacy-preserving deployment in public spaces. It detects
+  impulsive acoustic events (gunshots, vehicle impacts, glass breaking,
+  explosions) using networked edge nodes with directional microphone arrays.
+  The system produces Acoustic Probability Surfaces for localization, supports
+  deterministic replay for auditability, and enforces privacy constraints at
+  the type-system and protocol level. No speech recognition, speaker
+  identification, or continuous audio recording is possible by design.
+
+authors:
+  - name: "Resonance Contributors"
+    website: "https://github.com/resonance-project/resonance"
+
+repository-code: "https://github.com/resonance-project/resonance"
+url: "https://resonance-project.example"
+license: Apache-2.0
+
+keywords:
+  - acoustic-sensing
+  - gunshot-detection
+  - edge-computing
+  - privacy-by-design
+  - distributed-systems
+  - signal-processing
+  - MFCC
+  - direction-of-arrival
+  - Ed25519
+  - microphone-array
+  - spatial-intelligence
+  - IoT
+
+references:
+  - type: article
+    title: "Mel Frequency Cepstral Coefficients for Music Modeling"
+    authors:
+      - family-names: Logan
+        given-names: Beth
+    year: 2000
+    notes: "MFCC implementation reference"
+  - type: standard
+    title: "RFC 8037: CFRG Elliptic Curves for JOSE"
+    year: 2018
+    notes: "Ed25519 key format reference"
+  - type: article
+    title: "MUSIC algorithm for direction-of-arrival estimation"
+    authors:
+      - family-names: Schmidt
+        given-names: Ralph
+    year: 1986
+    notes: "DOA estimation foundation"

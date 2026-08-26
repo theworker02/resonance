@@ -1,0 +1,21 @@
+high_freq_features:
+  high_freq_energy_ratio:
+    description: "Fraction of energy above 4 kHz"
+    residential_glass_min: 0.30
+    commercial_glass_min: 0.20
+    vehicle_glass_min: 0.25
+  ring_duration_ms:
+    description: "Duration of high-frequency ringing after initial transient"
+    residential_typical: [50, 300]
+    commercial_typical: [30, 200]
+    vehicle_typical: [10, 80]
+
+spectral_embedding:
+  dimension: 128
+
+envelope:
+  expected_length: 50
+  frame_hop_ms: 10
+
+mfcc:
+  coefficients: 13

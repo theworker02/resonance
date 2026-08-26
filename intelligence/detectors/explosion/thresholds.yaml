@@ -1,0 +1,19 @@
+explosion_industrial:
+  min_peak_energy_db: 78.0
+  min_reverb_tail_ms: 500.0
+  max_attack_time_ms: 500.0
+  min_low_freq_ratio: 0.35
+
+explosion_structural:
+  min_peak_energy_db: 80.0
+  min_reverb_tail_ms: 800.0
+  multi_phase_min_peaks: 2
+
+explosion_ordnance:
+  min_peak_energy_db: 85.0
+  max_attack_time_ms: 15.0
+  min_spectral_flatness: 0.35
+  min_reverb_tail_ms: 1000.0
+
+unknown_explosion:
+  novel_threshold: 0.65

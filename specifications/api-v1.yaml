@@ -1,0 +1,1374 @@
+openapi: 3.1.0
+info:
+  title: Resonance API
+  version: 1.0.0
+  description: |
+    Spatial acoustic intelligence platform API.
+
+    Resonance provides distributed acoustic sensing for privacy-preserving incident
+    detection. This API exposes nodes, spatial cells, incidents, observations, and
+    operational health to authorized operators and integrations.
+
+    All endpoints except `/v1/transparency` require authentication via Bearer token.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Resonance Project
+    url: https://github.com/resonance-project/resonance
+
+servers:
+  - url: https://api.resonance.example/v1
+    description: Production
+  - url: https://staging-api.resonance.example/v1
+    description: Staging
+  - url: http://localhost:8080/v1
+    description: Local development
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Nodes
+    description: Hardware node management and health
+  - name: Cells
+    description: Spatial cell geometry and membership
+  - name: Incidents
+    description: Acoustic incident lifecycle
+  - name: Observations
+    description: Raw directional observations
+  - name: Models
+    description: ML model registry
+  - name: Detectors
+    description: Detector pack management
+  - name: Health
+    description: Platform operational health
+  - name: Audit
+    description: Audit trail and provenance
+  - name: Transparency
+    description: Public aggregate metrics (no auth required)
+  - name: Events
+    description: Real-time event streaming
+
+paths:
+  /v1/nodes:
+    get:
+      operationId: listNodes
+      summary: List nodes
+      description: Returns a paginated list of nodes with optional filters.
+      tags: [Nodes]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [online, offline, degraded, provisioning]
+          description: Filter by node operational status
+        - name: family
+          in: query
+          schema:
+            type: string
+            enum: [RN-D1, RN-F1, RN-P1]
+          description: Filter by hardware node family
+        - name: cell_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by spatial cell membership
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/PageSizeParam"
+      responses:
+        "200":
+          description: Paginated list of nodes
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Node"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/nodes/{id}:
+    get:
+      operationId: getNode
+      summary: Get node detail
+      description: Returns full node detail including health metrics, hardware manifest, and attestation status.
+      tags: [Nodes]
+      parameters:
+        - $ref: "#/components/parameters/NodeIdParam"
+      responses:
+        "200":
+          description: Node detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NodeDetail"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/cells:
+    get:
+      operationId: listCells
+      summary: List spatial cells
+      description: Returns a paginated list of spatial cells with optional filters.
+      tags: [Cells]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, degraded, offline, calibrating]
+          description: Filter by cell operational status
+        - name: cluster_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by cluster membership
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/PageSizeParam"
+      responses:
+        "200":
+          description: Paginated list of cells
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Cell"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/cells/{id}:
+    get:
+      operationId: getCell
+      summary: Get cell detail
+      description: Returns full cell detail including geometry, calibration state, and member nodes.
+      tags: [Cells]
+      parameters:
+        - $ref: "#/components/parameters/CellIdParam"
+      responses:
+        "200":
+          description: Cell detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CellDetail"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/incidents:
+    get:
+      operationId: listIncidents
+      summary: List incidents
+      description: Returns a paginated list of incidents with optional filters by status, confidence, classification, and date range.
+      tags: [Incidents]
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [candidate, active, reviewing, closed, false_positive]
+          description: Filter by incident lifecycle status
+        - name: min_confidence
+          in: query
+          schema:
+            type: number
+            format: float
+            minimum: 0.0
+            maximum: 1.0
+          description: Minimum confidence threshold
+        - name: classification
+          in: query
+          schema:
+            type: string
+            enum: [gunshot, vehicle_impact, glass_breaking, explosion, unknown]
+          description: Filter by event classification
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Start of date range (ISO 8601)
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: End of date range (ISO 8601)
+        - name: cell_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by spatial cell
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/PageSizeParam"
+      responses:
+        "200":
+          description: Paginated list of incidents
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Incident"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/incidents/{id}:
+    get:
+      operationId: getIncident
+      summary: Get incident detail
+      description: |
+        Returns full incident detail including all contributing observations,
+        provenance chain, confidence timeline, and Acoustic Probability Surface.
+      tags: [Incidents]
+      parameters:
+        - $ref: "#/components/parameters/IncidentIdParam"
+      responses:
+        "200":
+          description: Incident detail with full provenance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/IncidentDetail"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/incidents/{id}/replay:
+    get:
+      operationId: replayIncident
+      summary: Deterministic replay of incident processing
+      description: |
+        Returns a step-by-step deterministic replay of the incident processing pipeline,
+        showing how each observation contributed to the final confidence and classification.
+        This enables full auditability of the decision-making process.
+      tags: [Incidents]
+      parameters:
+        - $ref: "#/components/parameters/IncidentIdParam"
+      responses:
+        "200":
+          description: Deterministic replay trace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReplayTrace"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/incidents/{id}/review:
+    post:
+      operationId: submitReview
+      summary: Submit human review
+      description: |
+        Submits a human operator review for an incident. Reviews include a disposition
+        (confirmed, false positive, inconclusive) and optional notes. Reviews are
+        cryptographically signed and appended to the audit trail.
+      tags: [Incidents]
+      parameters:
+        - $ref: "#/components/parameters/IncidentIdParam"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HumanReview"
+      responses:
+        "201":
+          description: Review submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewResult"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/observations:
+    get:
+      operationId: listObservations
+      summary: List observations
+      description: Returns a paginated list of directional observations with optional filters.
+      tags: [Observations]
+      parameters:
+        - name: incident_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by associated incident
+        - name: node_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by originating node
+        - name: from
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: Start of time range (ISO 8601)
+        - name: to
+          in: query
+          schema:
+            type: string
+            format: date-time
+          description: End of time range (ISO 8601)
+        - $ref: "#/components/parameters/PageParam"
+        - $ref: "#/components/parameters/PageSizeParam"
+      responses:
+        "200":
+          description: Paginated list of observations
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Observation"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/models:
+    get:
+      operationId: listModels
+      summary: List ML models
+      description: Returns all registered ML models with version, type, and deployment status.
+      tags: [Models]
+      responses:
+        "200":
+          description: List of registered models
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Model"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/detectors:
+    get:
+      operationId: listDetectors
+      summary: List detector packs
+      description: Returns all registered detector packs with capabilities and activation status.
+      tags: [Detectors]
+      responses:
+        "200":
+          description: List of detector packs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Detector"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/health:
+    get:
+      operationId: getHealth
+      summary: Platform health summary
+      description: |
+        Returns a comprehensive health summary including node fleet status,
+        cell coverage, processing pipeline latency, and system resource utilization.
+      tags: [Health]
+      responses:
+        "200":
+          description: Platform health summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthSummary"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/audit/{incident_id}:
+    get:
+      operationId: getAuditTrail
+      summary: Audit trail for incident
+      description: |
+        Returns the complete cryptographically signed audit trail for an incident,
+        including every processing step, model invocation, human review, and state transition.
+      tags: [Audit]
+      parameters:
+        - name: incident_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Incident identifier
+      responses:
+        "200":
+          description: Complete audit trail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  incident_id:
+                    type: string
+                    format: uuid
+                  entries:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AuditEntry"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/transparency:
+    get:
+      operationId: getTransparency
+      summary: Public aggregate metrics
+      description: |
+        Returns aggregate platform metrics for public transparency. This endpoint
+        requires no authentication. Data is aggregated to prevent identification of
+        specific incidents or locations.
+      tags: [Transparency]
+      security: []
+      responses:
+        "200":
+          description: Transparency report with aggregate metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TransparencyReport"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /v1/events:
+    get:
+      operationId: streamEvents
+      summary: Real-time event stream (WebSocket)
+      description: |
+        WebSocket endpoint for real-time event streaming. Clients receive observations,
+        incident state transitions, node health updates, and system events as they occur.
+
+        Connection upgrade: Clients MUST send a valid Bearer token in the initial HTTP
+        request. After upgrade, the connection remains authenticated for its lifetime.
+
+        Message format: Each message is a JSON object with `type` and `payload` fields.
+        Supported event types: `observation`, `incident_created`, `incident_updated`,
+        `incident_closed`, `node_health`, `cell_status`, `system`.
+      tags: [Events]
+      parameters:
+        - name: filter
+          in: query
+          schema:
+            type: string
+            enum: [all, incidents, observations, health]
+          description: Filter event stream by category
+        - name: cell_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter events to a specific spatial cell
+      responses:
+        "101":
+          description: WebSocket connection established
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token issued by the Resonance identity provider
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+      description: Page number (1-indexed)
+    PageSizeParam:
+      name: page_size
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+      description: Number of items per page (max 100)
+    NodeIdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Node identifier
+    CellIdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Spatial cell identifier
+    IncidentIdParam:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+      description: Incident identifier
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Authentication required or token invalid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: Insufficient permissions for this operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+  schemas:
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+          examples: ["INVALID_PARAMETER", "NOT_FOUND", "UNAUTHORIZED"]
+        message:
+          type: string
+          description: Human-readable error description
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context (field-level validation errors, etc.)
+
+    PaginatedResponse:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page number
+        page_size:
+          type: integer
+          description: Items per page
+        total_items:
+          type: integer
+          description: Total number of items matching the query
+        total_pages:
+          type: integer
+          description: Total number of pages
+
+    Node:
+      type: object
+      required: [id, name, family, status, cell_id]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          description: Human-readable node name
+          examples: ["downtown-node-07"]
+        family:
+          type: string
+          enum: [RN-D1, RN-F1, RN-P1]
+          description: Hardware node family
+        status:
+          type: string
+          enum: [online, offline, degraded, provisioning]
+        cell_id:
+          type: string
+          format: uuid
+          description: Spatial cell this node belongs to
+        location:
+          $ref: "#/components/schemas/GeoPoint"
+        last_seen:
+          type: string
+          format: date-time
+          description: Last heartbeat timestamp
+
+    NodeDetail:
+      allOf:
+        - $ref: "#/components/schemas/Node"
+        - type: object
+          properties:
+            health:
+              $ref: "#/components/schemas/NodeHealth"
+            hardware_manifest:
+              $ref: "#/components/schemas/HardwareManifest"
+            attestation:
+              $ref: "#/components/schemas/Attestation"
+            firmware_version:
+              type: string
+              examples: ["4.0.0"]
+            uptime_seconds:
+              type: integer
+              description: Seconds since last boot
+            environment:
+              $ref: "#/components/schemas/EnvironmentReading"
+
+    NodeHealth:
+      type: object
+      properties:
+        score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Composite health score (0=critical, 100=perfect)
+        cpu_percent:
+          type: number
+          format: float
+        memory_percent:
+          type: number
+          format: float
+        disk_percent:
+          type: number
+          format: float
+        temperature_celsius:
+          type: number
+          format: float
+        microphone_channels_active:
+          type: integer
+          description: Number of functioning microphone channels
+        microphone_channels_total:
+          type: integer
+          description: Total microphone channels in array
+        timing_sync_offset_us:
+          type: integer
+          description: Time sync offset from reference in microseconds
+
+    HardwareManifest:
+      type: object
+      properties:
+        family:
+          type: string
+          enum: [RN-D1, RN-F1, RN-P1]
+        revision:
+          type: string
+          examples: ["rev-C"]
+        serial_number:
+          type: string
+        microphone_count:
+          type: integer
+        microphone_model:
+          type: string
+        compute_module:
+          type: string
+        firmware_hash:
+          type: string
+          description: SHA-256 hash of running firmware binary
+
+    Attestation:
+      type: object
+      properties:
+        valid:
+          type: boolean
+          description: Whether the node's privacy attestation is currently valid
+        last_attestation:
+          type: string
+          format: date-time
+        public_key:
+          type: string
+          description: Ed25519 public key (base64)
+        prohibited_capabilities:
+          type: array
+          items:
+            type: string
+          description: List of capabilities the node attests it cannot perform
+          examples: [["speech_recognition", "speaker_identification", "voiceprint_storage", "keyword_monitoring", "continuous_recording"]]
+
+    Cell:
+      type: object
+      required: [id, name, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          examples: ["downtown-block-3"]
+        status:
+          type: string
+          enum: [active, degraded, offline, calibrating]
+        cluster_id:
+          type: string
+          format: uuid
+        node_count:
+          type: integer
+          description: Number of nodes in this cell
+        area_sq_meters:
+          type: number
+          format: float
+          description: Approximate coverage area
+
+    CellDetail:
+      allOf:
+        - $ref: "#/components/schemas/Cell"
+        - type: object
+          properties:
+            geometry:
+              $ref: "#/components/schemas/CellGeometry"
+            calibration:
+              $ref: "#/components/schemas/CalibrationState"
+            nodes:
+              type: array
+              items:
+                $ref: "#/components/schemas/Node"
+            environment:
+              $ref: "#/components/schemas/EnvironmentReading"
+            last_incident:
+              type: string
+              format: date-time
+              description: Timestamp of most recent incident in this cell
+
+    CellGeometry:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [polygon]
+        coordinates:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeoPoint"
+          description: Polygon vertices defining the cell boundary
+        centroid:
+          $ref: "#/components/schemas/GeoPoint"
+
+    CalibrationState:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [calibrated, needs_calibration, calibrating, failed]
+        last_calibration:
+          type: string
+          format: date-time
+        calibration_quality:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Quality metric of last calibration (1.0 = excellent)
+        next_scheduled:
+          type: string
+          format: date-time
+
+    Incident:
+      type: object
+      required: [id, status, classification, confidence, detected_at]
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [candidate, active, reviewing, closed, false_positive]
+        classification:
+          type: string
+          enum: [gunshot, vehicle_impact, glass_breaking, explosion, unknown]
+        confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+          description: Final fused confidence score
+        detected_at:
+          type: string
+          format: date-time
+        cell_id:
+          type: string
+          format: uuid
+        estimated_location:
+          $ref: "#/components/schemas/GeoPoint"
+        observation_count:
+          type: integer
+          description: Number of contributing observations
+        reviewed:
+          type: boolean
+          description: Whether a human review has been submitted
+
+    IncidentDetail:
+      allOf:
+        - $ref: "#/components/schemas/Incident"
+        - type: object
+          properties:
+            observations:
+              type: array
+              items:
+                $ref: "#/components/schemas/Observation"
+            aps:
+              $ref: "#/components/schemas/AcousticProbabilitySurface"
+            confidence_timeline:
+              type: array
+              items:
+                $ref: "#/components/schemas/ConfidencePoint"
+            provenance:
+              type: array
+              items:
+                $ref: "#/components/schemas/AuditEntry"
+            environmental_conditions:
+              $ref: "#/components/schemas/EnvironmentReading"
+            conflict_report:
+              $ref: "#/components/schemas/ConflictReport"
+            reviews:
+              type: array
+              items:
+                $ref: "#/components/schemas/ReviewResult"
+
+    Observation:
+      type: object
+      required: [id, node_id, timestamp, bearing_deg, confidence]
+      properties:
+        id:
+          type: string
+          format: uuid
+        node_id:
+          type: string
+          format: uuid
+        incident_id:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+          description: Precision timestamp (Chronos-synchronized)
+        bearing_deg:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 360.0
+          description: Estimated direction of arrival in degrees
+        bearing_confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        elevation_deg:
+          type: number
+          format: float
+          minimum: -90.0
+          maximum: 90.0
+          description: Estimated elevation angle
+        features:
+          $ref: "#/components/schemas/AcousticFeatures"
+        waveprint:
+          type: string
+          description: SHA-256 acoustic fingerprint
+        signature:
+          type: string
+          description: Ed25519 signature (base64)
+
+    AcousticFeatures:
+      type: object
+      properties:
+        mfcc:
+          type: array
+          items:
+            type: number
+            format: float
+          description: 13 Mel-frequency cepstral coefficients
+        spectral_centroid:
+          type: number
+          format: float
+        spectral_rolloff:
+          type: number
+          format: float
+        zero_crossing_rate:
+          type: number
+          format: float
+        spectral_flux:
+          type: number
+          format: float
+        energy_db:
+          type: number
+          format: float
+          description: Signal energy in decibels
+
+    AcousticProbabilitySurface:
+      type: object
+      description: |
+        A discretized probability field representing the likelihood of event
+        origin at each grid point within the cell geometry.
+      properties:
+        cell_id:
+          type: string
+          format: uuid
+        resolution_meters:
+          type: number
+          format: float
+          description: Grid cell size in meters
+        origin:
+          $ref: "#/components/schemas/GeoPoint"
+        width_cells:
+          type: integer
+        height_cells:
+          type: integer
+        probabilities:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Row-major probability values (0.0 to 1.0)
+        peak_location:
+          $ref: "#/components/schemas/GeoPoint"
+        peak_confidence:
+          type: number
+          format: float
+
+    ConfidencePoint:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        confidence:
+          type: number
+          format: float
+          minimum: 0.0
+          maximum: 1.0
+        contributing_observation_id:
+          type: string
+          format: uuid
+        reason:
+          type: string
+          description: Why confidence changed at this point
+
+    ConflictReport:
+      type: object
+      properties:
+        has_conflicts:
+          type: boolean
+        conflicts:
+          type: array
+          items:
+            type: object
+            properties:
+              observation_a:
+                type: string
+                format: uuid
+              observation_b:
+                type: string
+                format: uuid
+              conflict_type:
+                type: string
+                enum: [bearing_contradiction, timing_impossible, classification_disagreement]
+              description:
+                type: string
+              resolution:
+                type: string
+                enum: [observation_excluded, confidence_reduced, unresolved]
+
+    HumanReview:
+      type: object
+      required: [disposition]
+      properties:
+        disposition:
+          type: string
+          enum: [confirmed, false_positive, inconclusive]
+          description: Operator's assessment of the incident
+        notes:
+          type: string
+          description: Free-text review notes
+          maxLength: 2000
+        classification_override:
+          type: string
+          enum: [gunshot, vehicle_impact, glass_breaking, explosion, unknown]
+          description: Optional classification correction
+
+    ReviewResult:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        incident_id:
+          type: string
+          format: uuid
+        reviewer:
+          type: string
+          description: Reviewer identity (opaque token)
+        disposition:
+          type: string
+          enum: [confirmed, false_positive, inconclusive]
+        notes:
+          type: string
+        submitted_at:
+          type: string
+          format: date-time
+        signature:
+          type: string
+          description: Ed25519 signature of the review record
+
+    ReplayTrace:
+      type: object
+      description: Step-by-step deterministic replay of incident processing
+      properties:
+        incident_id:
+          type: string
+          format: uuid
+        steps:
+          type: array
+          items:
+            type: object
+            properties:
+              step_number:
+                type: integer
+              timestamp:
+                type: string
+                format: date-time
+              action:
+                type: string
+                enum: [observation_received, correlation_computed, aps_updated, classification_run, confidence_fused, conflict_detected, threshold_crossed, incident_created, review_submitted]
+              input:
+                type: object
+                additionalProperties: true
+                description: Input data for this processing step
+              output:
+                type: object
+                additionalProperties: true
+                description: Output produced by this step
+              confidence_after:
+                type: number
+                format: float
+        final_state:
+          $ref: "#/components/schemas/Incident"
+        deterministic:
+          type: boolean
+          description: Whether replay produced identical results to original processing
+
+    Model:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          examples: ["gunshot-detector-v3"]
+        version:
+          type: string
+          examples: ["3.1.0"]
+        type:
+          type: string
+          enum: [classifier, anomaly_detector, ensemble]
+        format:
+          type: string
+          enum: [onnx, pytorch, tensorflow]
+        status:
+          type: string
+          enum: [active, staged, retired]
+        accuracy_metrics:
+          type: object
+          properties:
+            precision:
+              type: number
+              format: float
+            recall:
+              type: number
+              format: float
+            f1:
+              type: number
+              format: float
+        created_at:
+          type: string
+          format: date-time
+
+    Detector:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          examples: ["gunshot-pack"]
+        version:
+          type: string
+        description:
+          type: string
+        capabilities:
+          type: array
+          items:
+            type: string
+          description: Event types this detector can classify
+        models:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Model IDs used by this detector
+        active:
+          type: boolean
+        confidence_semantics:
+          type: string
+          description: How this detector's confidence scores should be interpreted
+
+    HealthSummary:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, critical]
+        timestamp:
+          type: string
+          format: date-time
+        fleet:
+          type: object
+          properties:
+            total_nodes:
+              type: integer
+            online:
+              type: integer
+            degraded:
+              type: integer
+            offline:
+              type: integer
+        cells:
+          type: object
+          properties:
+            total:
+              type: integer
+            active:
+              type: integer
+            degraded:
+              type: integer
+        pipeline:
+          type: object
+          properties:
+            avg_latency_ms:
+              type: number
+              format: float
+              description: Average observation-to-incident latency
+            p99_latency_ms:
+              type: number
+              format: float
+            observations_per_second:
+              type: number
+              format: float
+            incidents_last_24h:
+              type: integer
+        detectors:
+          type: object
+          properties:
+            active:
+              type: integer
+            total_models:
+              type: integer
+
+    TransparencyReport:
+      type: object
+      description: |
+        Publicly accessible aggregate metrics. All values are aggregated to
+        prevent identification of specific incidents, locations, or times.
+      properties:
+        generated_at:
+          type: string
+          format: date-time
+        period:
+          type: string
+          description: Reporting period
+          examples: ["2025-Q3"]
+        aggregate_metrics:
+          type: object
+          properties:
+            total_incidents:
+              type: integer
+              description: Total incidents in reporting period
+            confirmed_rate:
+              type: number
+              format: float
+              description: Fraction of reviewed incidents confirmed by operators
+            false_positive_rate:
+              type: number
+              format: float
+              description: Fraction of reviewed incidents marked as false positive
+            avg_response_time_seconds:
+              type: number
+              format: float
+              description: Average time from detection to operator review
+            fleet_uptime_percent:
+              type: number
+              format: float
+              description: Fleet-wide average uptime
+        privacy_attestation:
+          type: object
+          properties:
+            all_nodes_attested:
+              type: boolean
+            prohibited_capabilities_enforced:
+              type: boolean
+            last_audit_date:
+              type: string
+              format: date
+
+    AuditEntry:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        timestamp:
+          type: string
+          format: date-time
+        actor:
+          type: string
+          description: System component or operator that performed the action
+        action:
+          type: string
+          examples: ["observation_ingested", "correlation_computed", "classification_run", "review_submitted", "incident_closed"]
+        target_id:
+          type: string
+          format: uuid
+        details:
+          type: object
+          additionalProperties: true
+        signature:
+          type: string
+          description: Ed25519 signature of this audit entry
+
+    GeoPoint:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          minimum: -90.0
+          maximum: 90.0
+        longitude:
+          type: number
+          format: double
+          minimum: -180.0
+          maximum: 180.0
+        altitude_meters:
+          type: number
+          format: float
+          description: Altitude above sea level (optional)
+
+    EnvironmentReading:
+      type: object
+      properties:
+        temperature_celsius:
+          type: number
+          format: float
+        humidity_percent:
+          type: number
+          format: float
+        pressure_hpa:
+          type: number
+          format: float
+          description: Barometric pressure in hectopascals
+        wind_speed_ms:
+          type: number
+          format: float
+          description: Wind speed in meters per second
+        wind_direction_deg:
+          type: number
+          format: float
+          description: Wind direction in degrees (0=north)
+        measured_at:
+          type: string
+          format: date-time

@@ -1,0 +1,36 @@
+# Feature schema for the impulsive event detector
+# Describes expected feature ranges for calibration and documentation.
+
+spectral_embedding:
+  dimension: 128
+  description: "L2-normalized acoustic embedding from AcousticEmbedder MLP"
+
+envelope:
+  description: "Normalized RMS energy frames"
+  expected_length: 50
+  frame_hop_ms: 10
+
+impulse_features:
+  attack_time_ms:
+    description: "Time from noise floor to peak energy"
+    typical_range: [1, 200]
+    gunfire_range: [1, 50]
+  decay_time_ms:
+    description: "Time from peak to -20dB"
+    typical_range: [5, 2000]
+  impulse_count_500ms:
+    description: "Number of distinct peaks above threshold within 500 ms window"
+    single: 1
+    burst_min: 2
+    automatic_min: 5
+  peak_flatness:
+    description: "Spectral flatness at peak frame — higher = more broadband"
+    gunfire_min: 0.3
+  reverb_tail_ms:
+    description: "Duration of reverb tail after initial impulse"
+    near_explosion_max: 500
+    far_explosion_min: 300
+
+mfcc:
+  coefficients: 13
+  description: "Standard 13-coefficient MFCC"

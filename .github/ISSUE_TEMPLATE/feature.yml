@@ -1,0 +1,68 @@
+name: Feature Request
+description: Propose a new feature or enhancement for Resonance
+labels: [enhancement]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear description of the feature you'd like to see.
+      placeholder: Describe the feature...
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Explain the problem this feature solves or the workflow it enables.
+      placeholder: |
+        As an operator, I want to...
+        As a developer integrating with the API, I need to...
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of the system would this feature affect?
+      options:
+        - Core (crates/resonance-core)
+        - Edge (crates/resonance-edge)
+        - Signal (crates/resonance-signal)
+        - Protocol (crates/resonance-protocol)
+        - Console (apps/console)
+        - CLI (apps/cli)
+        - Simulator (apps/simulator)
+        - Intelligence (intelligence/)
+        - Hardware (hardware/)
+        - API
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative approaches?
+      placeholder: Describe any alternatives you've thought about...
+    validations:
+      required: false
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other context, mockups, diagrams, or references.
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to your workflow?
+      options:
+        - Nice to have
+        - Important (would improve workflow significantly)
+        - Critical (blocking adoption or deployment)
+    validations:
+      required: false

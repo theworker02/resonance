@@ -1,0 +1,27 @@
+{
+  "dataset": "UrbanVehicle-1",
+  "dataset_version": "1.0.0",
+  "evaluated_at": "2024-03-01T00:00:00Z",
+  "model_version": "heuristic-0.5.0",
+  "n_samples": 2700,
+  "n_classes": 6,
+  "overall": {
+    "precision": 0.876,
+    "recall": 0.859,
+    "f1": 0.867,
+    "calibration_error": 0.048,
+    "unknown_recall": 0.821,
+    "false_positive_rate": 0.063,
+    "missed_event_rate": 0.141,
+    "inference_latency_p50_ms": 1.3,
+    "inference_latency_p99_ms": 3.5
+  },
+  "per_class": {
+    "vehicle_crash":      {"precision": 0.891, "recall": 0.878, "f1": 0.884, "n_samples": 540},
+    "vehicle_horn":       {"precision": 0.903, "recall": 0.887, "f1": 0.895, "n_samples": 480},
+    "vehicle_skid":       {"precision": 0.861, "recall": 0.843, "f1": 0.852, "n_samples": 420},
+    "vehicle_engine_rev": {"precision": 0.843, "recall": 0.821, "f1": 0.832, "n_samples": 480},
+    "emergency_siren":    {"precision": 0.921, "recall": 0.908, "f1": 0.914, "n_samples": 540},
+    "unknown_vehicle":    {"precision": 0.798, "recall": 0.821, "f1": 0.809, "n_samples": 240}
+  }
+}

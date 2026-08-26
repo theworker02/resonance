@@ -1,0 +1,22 @@
+fireworks_aerial_burst:
+  min_peak_energy_db: 65.0
+  max_attack_time_ms: 80.0
+  min_decay_time_ms: 100.0
+  min_secondary_pops: 2
+  min_tail_complexity: 0.45
+  max_spectral_centroid_hz: 4000.0
+
+fireworks_ground_level:
+  min_peak_energy_db: 55.0
+  max_peak_energy_db: 78.0
+  max_attack_time_ms: 150.0
+  max_spectral_centroid_hz: 3000.0
+
+fireworks_sustained_display:
+  min_burst_count: 3
+  inter_event_min_s: 0.3
+  inter_event_max_s: 8.0
+  observation_window_s: 30.0
+
+unknown_fireworks:
+  novel_threshold: 0.65

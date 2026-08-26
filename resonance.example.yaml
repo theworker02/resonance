@@ -1,0 +1,47 @@
+# resonance.yaml — deployment configuration
+# Supports optional file-based configuration for advanced users.
+
+version: "1"
+
+deployment:
+  profile: research
+  name: "North Campus Research Network"
+
+retention:
+  observations: 30d
+  incidents: 365d
+  audit: forever
+  diagnostics: 7d
+
+models:
+  production: acoustic-classifier-v5
+  shadow:
+    - experimental-wideband-v2
+
+alerts:
+  - name: High-confidence incident
+    conditions:
+      - field: confidence
+        operator: gte
+        value: 0.90
+      - field: scene_quality
+        operator: eq
+        value: GOOD
+    destinations:
+      - type: webhook
+        url: https://ops.example.com/resonance
+
+privacy:
+  audio_retention_seconds: 5
+  clip_capture: disabled
+  prohibited_capabilities:
+    - speech_recognition
+    - speaker_identification
+    - voiceprint_storage
+    - keyword_monitoring
+    - continuous_recording
+
+fleet:
+  firmware_channel: stable
+  auto_update: false
+  calibration_interval_days: 90

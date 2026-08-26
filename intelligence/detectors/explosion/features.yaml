@@ -1,0 +1,18 @@
+infrasound_features:
+  infrasound_energy_ratio:
+    description: "Fraction of energy below 20 Hz (if sensor supports it)"
+    large_explosion_min: 0.05
+  pressure_rise_ms:
+    description: "Time from ambient to peak pressure"
+    ordnance_max: 10.0
+    industrial_typical: [20, 500]
+
+spectral_embedding:
+  dimension: 128
+
+envelope:
+  expected_length: 50
+  frame_hop_ms: 10
+
+mfcc:
+  coefficients: 13

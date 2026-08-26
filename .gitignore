@@ -1,0 +1,54 @@
+# Build
+/target/
+
+# Legacy directories — superseded by canonical structure
+/crates/
+/core/
+/cli/
+/console/
+/meshlab/
+/deploy/
+/db/
+/rep/
+/protocol/
+/sensor/
+/done/
+/echo/
+/tools/
+/apps/cli/
+/apps/simulator/
+/apps/docs-site/
+/-p/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rust
+**/*.rs.bk
+
+# ML models
+*.onnx
+*.pt
+*.pkl
+
+# Logs
+*.log

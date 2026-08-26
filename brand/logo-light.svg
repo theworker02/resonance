@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Resonance Logo — Light background variant (graphite nodes, violet arcs) -->
+
+  <rect x="28" y="28" width="72" height="72" rx="12" ry="12" fill="none" stroke="#111318" stroke-width="1.5" opacity="0.15"/>
+
+  <path d="M 64 52 A 12 12 0 0 1 76 64" fill="none" stroke="#7667FF" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 60 42 A 22 22 0 0 1 86 64" fill="none" stroke="#7667FF" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 56 32 A 32 32 0 0 1 96 64" fill="none" stroke="#7667FF" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+
+  <circle cx="64" cy="64" r="3" fill="#7667FF" opacity="0.5"/>
+
+  <circle cx="30" cy="30" r="6" fill="#111318"/>
+  <circle cx="98" cy="30" r="6" fill="#111318"/>
+  <circle cx="30" cy="98" r="6" fill="#111318"/>
+  <circle cx="98" cy="98" r="6" fill="#111318"/>
+
+  <circle cx="98" cy="30" r="9" fill="#7667FF" opacity="0.1"/>
+</svg>

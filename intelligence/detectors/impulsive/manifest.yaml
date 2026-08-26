@@ -1,0 +1,34 @@
+name: impulsive_event
+version: 0.5.0
+description: "Detects impulsive acoustic events: gunfire (single, burst, automatic) and near/far explosions."
+author: "Resonance Contributors"
+license: "Apache-2.0"
+
+inputs:
+  - spectral_embedding
+  - envelope
+  - impulse_features
+  - mfcc
+
+outputs:
+  - gunfire_single
+  - gunfire_burst
+  - gunfire_automatic
+  - explosion_near
+  - explosion_far
+  - unknown_impulsive
+
+prohibited_capabilities: []
+required_capabilities: []
+
+min_snr_db: 6.0
+min_peak_energy_db: 70.0
+
+notes: >
+  Heuristic detector for Phase II. Gunfire is characterized by very short attack
+  time (< 50 ms), high peak energy, and broad-spectrum energy distribution.
+  Burst/automatic fire is detected via multiple impulse peaks within a 500 ms window.
+  Far explosions show lower peak energy but longer reverb tail.
+
+changelog:
+  - "0.5.0: Initial heuristic release"

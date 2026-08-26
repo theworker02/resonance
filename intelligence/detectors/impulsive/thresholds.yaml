@@ -1,0 +1,39 @@
+# Detection thresholds for the impulsive event detector
+# Tuned on UrbanImpulse-1 dataset (Phase II evaluation).
+
+gunfire_single:
+  min_peak_energy_db: 72.0
+  max_attack_time_ms: 50.0
+  min_spectral_flatness: 0.28
+  max_impulse_count_500ms: 1
+  min_snr_db: 8.0
+
+gunfire_burst:
+  min_peak_energy_db: 70.0
+  max_attack_time_ms: 50.0
+  min_impulse_count_500ms: 2
+  max_impulse_count_500ms: 4
+  inter_impulse_variance_max: 50.0   # ms, low variance = regular spacing
+
+gunfire_automatic:
+  min_peak_energy_db: 68.0
+  min_impulse_count_500ms: 5
+  inter_impulse_variance_max: 30.0
+  min_spectral_flatness: 0.25
+
+explosion_near:
+  min_peak_energy_db: 80.0
+  max_attack_time_ms: 30.0
+  max_reverb_tail_ms: 500.0
+  min_low_freq_ratio: 0.40          # energy ratio below 200 Hz
+
+explosion_far:
+  min_peak_energy_db: 55.0
+  min_reverb_tail_ms: 300.0
+  max_spectral_centroid_hz: 1500.0
+  max_zcr: 0.15
+
+unknown_impulsive:
+  # Fallback when peak energy is high but no pattern matches
+  min_peak_energy_db: 65.0
+  novel_threshold: 0.65

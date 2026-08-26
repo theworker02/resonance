@@ -1,0 +1,25 @@
+families:
+  rn_mini:
+    display_name: "RN-Mini"
+    microphone_count: 4
+    has_npu: false
+    has_precision_gnss: false
+    has_secure_element: false
+    has_imu: false
+    target_cost_usd: 120
+  rn_edge:
+    display_name: "RN-Edge"
+    microphone_count: 8
+    has_npu: true
+    has_precision_gnss: true
+    has_secure_element: true
+    has_imu: true
+    target_cost_usd: 380
+  rn_precision:
+    display_name: "RN-Precision"
+    microphone_count: 12
+    has_npu: true
+    has_precision_gnss: true
+    has_secure_element: true
+    has_imu: true
+    target_cost_usd: 1200

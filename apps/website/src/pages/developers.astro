@@ -1,0 +1,194 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Developers" description="Resonance developer portal — quick start, SDK, API reference, and contributing guide.">
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-cyan/5 via-transparent to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-6 pt-32 pb-16 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">
+        Developer Portal
+      </h1>
+      <p class="text-xl text-white/60 max-w-2xl mx-auto">
+        Everything you need to build with Resonance. Run locally in minutes, build custom detectors, or integrate the platform into your stack.
+      </p>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="max-w-4xl mx-auto px-6 py-16">
+    <h2 class="text-2xl font-bold mb-8">Quick Start</h2>
+    <div class="space-y-6">
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-lg bg-cyan/10 text-cyan text-sm font-bold flex items-center justify-center">1</span>
+          <h3 class="font-semibold">Clone and build</h3>
+        </div>
+        <pre class="bg-black/40 rounded-xl p-4 overflow-x-auto text-sm font-mono text-white/80"><code>git clone https://github.com/resonance-project/resonance.git
+cd resonance
+cargo build --workspace</code></pre>
+      </div>
+
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-lg bg-cyan/10 text-cyan text-sm font-bold flex items-center justify-center">2</span>
+          <h3 class="font-semibold">Run the simulator</h3>
+        </div>
+        <pre class="bg-black/40 rounded-xl p-4 overflow-x-auto text-sm font-mono text-white/80"><code># Launch a 25-node simulated mesh
+cargo run --bin resonance-edge -- simulate
+
+# Or use Docker Compose for the full stack
+docker compose up -d
+docker compose exec platform resonance simulate --nodes 25 --environment suburban</code></pre>
+      </div>
+
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-lg bg-cyan/10 text-cyan text-sm font-bold flex items-center justify-center">3</span>
+          <h3 class="font-semibold">Access the console</h3>
+        </div>
+        <pre class="bg-black/40 rounded-xl p-4 overflow-x-auto text-sm font-mono text-white/80"><code># Platform API
+curl http://localhost:8080/api/v1/health
+
+# Real-time events via WebSocket
+wscat -c ws://localhost:8080/ws/events
+
+# Console UI
+open http://localhost:3000</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SDK Overview -->
+  <section class="max-w-4xl mx-auto px-6 py-16">
+    <h2 class="text-2xl font-bold mb-8">SDK — Build Custom Detectors</h2>
+    <p class="text-white/50 mb-6 leading-relaxed">
+      The Resonance SDK provides the <code class="text-cyan bg-cyan/10 px-2 py-0.5 rounded text-sm">DetectorInterface</code> trait. Implement it to create custom acoustic classifiers that plug into the platform without touching internal code.
+    </p>
+    <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
+      <pre class="bg-black/40 rounded-xl p-4 overflow-x-auto text-sm font-mono text-white/80"><code>use resonance_sdk::detector::*;
+
+struct MyDetector;
+
+impl DetectorInterface for MyDetector {
+    fn name(&self) -> &str { "my-detector" }
+    fn version(&self) -> &str { "0.1.0" }
+    fn supported_classes(&self) -> &[&str] { &["gunshot", "glass_break"] }
+
+    fn analyze(&self, input: &DetectorInput) -> DetectorOutput {
+        // Your ML model inference here
+        DetectorOutput {
+            classification: "gunshot".into(),
+            confidence: 0.94,
+            alternatives: vec![("glass_break".into(), 0.04)],
+            model_version: "0.1.0".into(),
+            latency_ms: 12.3,
+        }
+    }
+
+    fn health(&self) -> bool { true }
+}</code></pre>
+    </div>
+    <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium text-sm mb-1">Signal Processing</h4>
+        <p class="text-xs text-white/40">RMS, ZCR, FFT, spectral features, envelope detection</p>
+      </div>
+      <div class="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium text-sm mb-1">Feature Extraction</h4>
+        <p class="text-xs text-white/40">MFCC, spectral centroid, rolloff, WavePrint fingerprint</p>
+      </div>
+      <div class="p-4 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium text-sm mb-1">Testing Utilities</h4>
+        <p class="text-xs text-white/40">Synthetic audio generation, accuracy benchmarks, latency profiling</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Overview -->
+  <section class="max-w-4xl mx-auto px-6 py-16">
+    <h2 class="text-2xl font-bold mb-8">Platform API</h2>
+    <p class="text-white/50 mb-6 leading-relaxed">
+      RESTful API with WebSocket streaming. JSON responses, JWT authentication, OpenAPI specification available.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono bg-green-500/10 text-green-400">GET</span>
+          <code class="text-sm text-white/70">/api/v1/incidents</code>
+        </div>
+        <p class="text-xs text-white/40">List active incidents with spatial data, confidence, and contributing nodes.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono bg-green-500/10 text-green-400">GET</span>
+          <code class="text-sm text-white/70">/api/v1/nodes</code>
+        </div>
+        <p class="text-xs text-white/40">Node fleet status, health, timing quality, and maintenance predictions.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono bg-blue-500/10 text-blue-400">WS</span>
+          <code class="text-sm text-white/70">/ws/events</code>
+        </div>
+        <p class="text-xs text-white/40">Real-time event stream with incident creation, updates, and node telemetry.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="px-2 py-0.5 rounded text-xs font-mono bg-green-500/10 text-green-400">GET</span>
+          <code class="text-sm text-white/70">/api/v1/evidence/{id}</code>
+        </div>
+        <p class="text-xs text-white/40">Retrieve provenance chain and evidence package for a specific incident.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Repository & Contributing -->
+  <section class="max-w-4xl mx-auto px-6 py-16">
+    <h2 class="text-2xl font-bold mb-8">Repository Structure</h2>
+    <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
+      <pre class="text-sm font-mono text-white/70 leading-relaxed"><code>resonance/
+├── platform/          Core platform — correlation, incidents, API
+├── edge/              Edge node runtime — acquisition, DSP, privacy
+├── sdk/               Public SDK — detector interface, signal processing
+├── simulator/         Virtual mesh deployment for testing
+├── specifications/    Hardware and protocol specifications
+├── tests/             Integration, e2e, chaos, and benchmarks
+└── apps/
+    └── website/       This website (Astro + Tailwind)</code></pre>
+    </div>
+
+    <h2 class="text-2xl font-bold mt-16 mb-8">Contributing</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium mb-2">Report Issues</h4>
+        <p class="text-sm text-white/40">Found a bug or have a feature request? Open an issue on GitHub with reproduction steps.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium mb-2">Submit PRs</h4>
+        <p class="text-sm text-white/40">Fork, branch, implement, test, submit. All contributions require passing CI and a review.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium mb-2">Build Detectors</h4>
+        <p class="text-sm text-white/40">Use the SDK to build novel acoustic classifiers. Share them with the community as crates.</p>
+      </div>
+      <div class="p-5 rounded-xl border border-white/5 bg-white/[0.02]">
+        <h4 class="font-medium mb-2">Improve Docs</h4>
+        <p class="text-sm text-white/40">Documentation PRs are always welcome. Help others understand the system.</p>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col sm:flex-row gap-4">
+      <a href="https://github.com/resonance-project/resonance" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-graphite font-semibold hover:bg-white/90 transition-colors">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path></svg>
+        View on GitHub
+      </a>
+      <a href="https://github.com/resonance-project/resonance/issues" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/10 hover:bg-white/5 transition-colors">
+        Open an Issue
+      </a>
+    </div>
+  </section>
+
+</Base>

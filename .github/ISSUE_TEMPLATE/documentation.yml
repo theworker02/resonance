@@ -1,0 +1,62 @@
+name: Documentation Issue
+description: Report a documentation error, gap, or improvement
+labels: [documentation]
+body:
+  - type: input
+    id: page-url
+    attributes:
+      label: Page URL or File Path
+      description: Link to the documentation page or file path in the repository.
+      placeholder: "https://resonance-project.example/docs/... or docs/architecture.md"
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What kind of documentation issue is this?
+      options:
+        - Incorrect information
+        - Missing documentation
+        - Unclear explanation
+        - Outdated content
+        - Broken link
+        - Typo / formatting
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe what is wrong or missing.
+      placeholder: |
+        The section on X says Y, but the actual behavior is Z...
+        There is no documentation for feature W...
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested Fix
+      description: If you know the correct information, please provide it here.
+    validations:
+      required: false
+  - type: dropdown
+    id: section
+    attributes:
+      label: Documentation Section
+      description: Which area of documentation is affected?
+      options:
+        - Architecture
+        - API Reference
+        - Hardware Specifications
+        - Security
+        - Privacy
+        - Calibration
+        - Deployment / Operations
+        - Contributing Guide
+        - RFCs
+        - Other
+    validations:
+      required: false

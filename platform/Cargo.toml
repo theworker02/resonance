@@ -1,0 +1,25 @@
+[package]
+name = "resonance-platform"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Resonance core platform — spatial cells, correlation, incidents, provenance, API"
+
+[dependencies]
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+sha2 = { workspace = true }
+hex = { workspace = true }
+dashmap = "5.5"
+sqlx = { version = "0.7", features = ["postgres", "runtime-tokio-rustls", "uuid", "chrono", "json"] }
+axum = { version = "0.7", features = ["ws", "macros"] }
+tower-http = { version = "0.5", features = ["cors", "trace", "compression-gzip"] }
+async-nats = "0.35"
+jsonwebtoken = "9.3"
+resonance-sdk = { path = "../sdk" }

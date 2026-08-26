@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="VectorNode X1" description="VectorNode X1 — spatial acoustic instrument for the Resonance platform.">
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-cyan/5 via-transparent to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-6 pt-32 pb-16 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan/20 bg-cyan/5 text-xs text-cyan mb-8">
+        RES-HW-001 Rev 1.0
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+        VectorNode X1
+      </h1>
+      <p class="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-4">
+        Spatial Acoustic Instrument
+      </p>
+      <p class="text-base text-white/40 max-w-xl mx-auto">
+        Not a microphone. A calibrated multi-channel spatial acoustic instrument measuring pressure, direction, time, phase, frequency, and environment simultaneously.
+      </p>
+    </div>
+  </section>
+
+  <!-- Subsystem Grid -->
+  <section class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">Integrated Subsystems</h2>
+      <p class="text-white/50 max-w-2xl mx-auto">Eight purpose-built subsystems in a single weatherproof enclosure. Each calibrated, each reporting uncertainty.</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Acoustic Array -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Acoustic Array</h3>
+        <p class="text-sm text-white/40">12-channel MEMS + condenser array with 24-bit simultaneous sampling up to 192 kHz.</p>
+      </div>
+      <!-- Precision Pressure -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-violet/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Precision Pressure</h3>
+        <p class="text-sm text-white/40">Dedicated high-fidelity reference channel with THD+N below -80 dB for absolute SPL measurement.</p>
+      </div>
+      <!-- Chronos -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Chronos</h3>
+        <p class="text-sm text-white/40">Multi-constellation GNSS with PPS accuracy ≤15 ns RMS and TCXO holdover ≤1 µs/hour.</p>
+      </div>
+      <!-- Atmos -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-violet/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Atmos</h3>
+        <p class="text-sm text-white/40">Ultrasonic anemometer, temperature, humidity, and pressure for real-time propagation correction.</p>
+      </div>
+      <!-- Compute -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Compute</h3>
+        <p class="text-sm text-white/40">ARM64 8-core with 6+ TOPS NPU for real-time DSP and on-device ML inference.</p>
+      </div>
+      <!-- Security -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-violet/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Security</h3>
+        <p class="text-sm text-white/40">TPM 2.0 root of trust, secure boot chain, Ed25519 signing of every observation.</p>
+      </div>
+      <!-- Network -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.858 15.355-5.858 21.213 0"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Network</h3>
+        <p class="text-sm text-white/40">Gigabit PoE+ primary with Wi-Fi 6 and LTE failover. 72-hour offline operation.</p>
+      </div>
+      <!-- Power -->
+      <div class="p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-colors">
+        <div class="w-12 h-12 rounded-xl bg-violet/10 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h3 class="font-semibold mb-1">Power</h3>
+        <p class="text-sm text-white/40">PoE+ powered at under 10 W typical with 4-12 hour battery backup.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Specifications -->
+  <section class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">Key Specifications</h2>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-white/10">
+            <th class="text-left py-4 px-4 text-white/50 font-medium">Parameter</th>
+            <th class="text-left py-4 px-4 text-white/50 font-medium">Target</th>
+            <th class="text-left py-4 px-4 text-white/50 font-medium">Minimum</th>
+          </tr>
+        </thead>
+        <tbody class="text-white/70">
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Acoustic Channels</td>
+            <td class="py-3 px-4 text-cyan">12 synchronized</td>
+            <td class="py-3 px-4">8</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Frequency Range</td>
+            <td class="py-3 px-4 text-cyan">20 Hz – 40 kHz</td>
+            <td class="py-3 px-4">50 Hz – 20 kHz</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">SNR (A-weighted)</td>
+            <td class="py-3 px-4 text-cyan">72 dBA</td>
+            <td class="py-3 px-4">68 dBA</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Acoustic Overload Point</td>
+            <td class="py-3 px-4 text-cyan">135 dB SPL</td>
+            <td class="py-3 px-4">130 dB SPL</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Sample Rate</td>
+            <td class="py-3 px-4 text-cyan">48 / 96 / 192 kHz</td>
+            <td class="py-3 px-4">48 kHz</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">PPS Accuracy</td>
+            <td class="py-3 px-4 text-cyan">≤ 15 ns RMS</td>
+            <td class="py-3 px-4">≤ 100 ns RMS</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Holdover Drift</td>
+            <td class="py-3 px-4 text-cyan">≤ 1 µs/hour</td>
+            <td class="py-3 px-4">≤ 10 µs/hour</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Wind Measurement</td>
+            <td class="py-3 px-4 text-cyan">0–60 m/s, ±0.1 m/s</td>
+            <td class="py-3 px-4">0–40 m/s, ±0.5 m/s</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Compute</td>
+            <td class="py-3 px-4 text-cyan">ARM64 8-core, 16 GB, 6+ TOPS NPU</td>
+            <td class="py-3 px-4">4-core, 8 GB</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Power</td>
+            <td class="py-3 px-4 text-cyan">< 10 W (PoE+)</td>
+            <td class="py-3 px-4">< 15 W peak</td>
+          </tr>
+          <tr class="border-b border-white/5">
+            <td class="py-3 px-4 font-medium">Enclosure</td>
+            <td class="py-3 px-4 text-cyan">IP67, -30 to +60°C</td>
+            <td class="py-3 px-4">IP66, -20 to +50°C</td>
+          </tr>
+          <tr>
+            <td class="py-3 px-4 font-medium">Offline Storage</td>
+            <td class="py-3 px-4 text-cyan">72 hours</td>
+            <td class="py-3 px-4">4 hours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-12 text-center">
+      <a href="https://github.com/resonance-project/resonance/blob/main/specifications/RES-HW-VECTORNODE-X1.md" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-white/10 text-sm hover:bg-white/5 transition-colors">
+        View Full Specification (RES-HW-001)
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+      </a>
+    </div>
+  </section>
+
+</Base>

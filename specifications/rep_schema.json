@@ -1,0 +1,176 @@
+{
+  "schema_meta": "https://json-schema.org/draft/2020-12/schema",
+  "id": "https://resonance-project.example/schemas/rep/v1/rep-event.json",
+  "title": "REPEvent",
+  "description": "A Resonance Event Protocol (REP) v1 acoustic incident event emitted by an edge sensor node.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "protocol_version",
+    "sensor_id",
+    "timestamp_utc",
+    "timestamp_uncertainty_us",
+    "event_duration_ms",
+    "acoustic_fingerprint",
+    "feature_vector_version",
+    "peak_energy_db",
+    "impulse_score",
+    "environmental_noise_db",
+    "snr_db",
+    "sensor_health_score",
+    "firmware_version",
+    "model_version",
+    "replay_nonce",
+    "signature",
+    "features"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Globally unique identifier for this event (UUID v4)."
+    },
+    "protocol_version": {
+      "type": "string",
+      "description": "REP protocol version (semver). Current: 1.0.0."
+    },
+    "sensor_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID of the sensor that generated this event."
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp of event onset, ISO 8601 with nanosecond precision where available."
+    },
+    "timestamp_uncertainty_us": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated timing uncertainty in microseconds based on clock sync quality."
+    },
+    "event_duration_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Duration of the detected acoustic event in milliseconds."
+    },
+    "acoustic_fingerprint": {
+      "type": "string",
+      "description": "SHA-256 hex digest of the normalized feature vector. Used for deduplication and integrity."
+    },
+    "feature_vector_version": {
+      "type": "string",
+      "description": "Version string identifying the feature extraction algorithm."
+    },
+    "peak_energy_db": {
+      "type": "number",
+      "description": "Peak sound pressure level during the event in dB SPL."
+    },
+    "impulse_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Classifier confidence that this event is an impulsive acoustic incident."
+    },
+    "environmental_noise_db": {
+      "type": "number",
+      "description": "Estimated ambient noise floor at the time of the event in dB SPL."
+    },
+    "snr_db": {
+      "type": "number",
+      "description": "Signal-to-noise ratio of the event (peak_energy_db minus environmental_noise_db)."
+    },
+    "sensor_health_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Composite sensor health score at time of event (0=severely degraded, 100=nominal)."
+    },
+    "firmware_version": {
+      "type": "string",
+      "description": "Firmware version string running on the edge node."
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Acoustic model / feature extractor version string."
+    },
+    "replay_nonce": {
+      "type": "string",
+      "description": "Hex-encoded 16-byte random nonce for replay attack prevention."
+    },
+    "signature": {
+      "type": "string",
+      "description": "Base64-encoded Ed25519 signature over the canonical event payload."
+    },
+    "received_late": {
+      "type": "boolean",
+      "description": "True if this event was buffered offline and replayed after reconnection."
+    },
+    "received_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC timestamp when the core received this event. Set by core, not edge."
+    },
+    "baseline_noise_db": {
+      "type": "number",
+      "description": "Long-term learned noise floor for this hour-of-week bucket."
+    },
+    "deviation_from_baseline_db": {
+      "type": "number",
+      "description": "Difference between environmental_noise_db and baseline_noise_db."
+    },
+    "is_unusual": {
+      "type": "boolean",
+      "description": "True if the event occurred during an unusually loud or quiet period."
+    },
+    "features": {
+      "type": "object",
+      "description": "Extracted acoustic feature vector. No raw PCM is included.",
+      "required": [
+        "envelope",
+        "spectrum_magnitude",
+        "mfcc",
+        "spectral_centroid_hz",
+        "spectral_rolloff_hz",
+        "zero_crossing_rate"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "envelope": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "RMS energy envelope sampled in 10 ms frames over the event window."
+        },
+        "spectrum_magnitude": {
+          "type": "array",
+          "items": { "type": "number" },
+          "description": "FFT magnitude spectrum (2048-point Hann-windowed FFT, first 1025 bins)."
+        },
+        "mfcc": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 13,
+          "maxItems": 13,
+          "description": "13 Mel-frequency cepstral coefficients (40 mel filters, 20-8000 Hz)."
+        },
+        "spectral_centroid_hz": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Spectral centroid in Hz."
+        },
+        "spectral_rolloff_hz": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Spectral rolloff frequency in Hz (85% energy threshold)."
+        },
+        "zero_crossing_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Zero-crossing rate normalized to [0, 1]."
+        }
+      }
+    }
+  }
+}

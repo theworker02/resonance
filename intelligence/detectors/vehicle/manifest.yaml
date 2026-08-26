@@ -1,0 +1,36 @@
+name: vehicle_event
+version: 0.5.0
+description: "Detects vehicle-related acoustic events: crashes, horns, skids, engines, and sirens."
+author: "Resonance Contributors"
+license: "Apache-2.0"
+
+inputs:
+  - spectral_embedding
+  - envelope
+  - mfcc
+  - harmonic_features
+  - temporal_pattern
+
+outputs:
+  - vehicle_crash
+  - vehicle_horn
+  - vehicle_skid
+  - vehicle_engine_rev
+  - emergency_siren
+  - unknown_vehicle
+
+prohibited_capabilities: []
+required_capabilities: []
+
+min_snr_db: 3.0
+min_peak_energy_db: 45.0
+
+notes: >
+  Vehicle events span a wide energy range. Crashes are highly impulsive with
+  broadband noise. Horns and sirens exhibit clear harmonic/tonal structure.
+  Skids produce narrowband friction noise (1–4 kHz). Engine revs have periodic
+  harmonic structure proportional to RPM. Sirens have characteristic frequency
+  modulation patterns.
+
+changelog:
+  - "0.5.0: Initial heuristic release"

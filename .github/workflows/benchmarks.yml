@@ -1,0 +1,17 @@
+name: Benchmarks
+on:
+  push:
+    branches: [main]
+    paths: ['crates/resonance-signal/**', 'crates/resonance-core/**']
+
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo bench --workspace 2>&1 | tee benchmark-results.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmarks
+          path: benchmark-results.txt

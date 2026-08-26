@@ -1,0 +1,21 @@
+glass_residential:
+  min_peak_energy_db: 52.0
+  min_high_freq_ratio: 0.30
+  min_ring_duration_ms: 50.0
+  max_ring_duration_ms: 350.0
+  min_spectral_rolloff_hz: 4000.0
+
+glass_commercial:
+  min_peak_energy_db: 58.0
+  min_high_freq_ratio: 0.20
+  min_low_freq_ratio: 0.15
+  max_ring_duration_ms: 250.0
+
+glass_vehicle:
+  min_peak_energy_db: 50.0
+  min_high_freq_ratio: 0.25
+  max_ring_duration_ms: 100.0
+  min_spectral_flatness: 0.35
+
+unknown_glass:
+  novel_threshold: 0.65

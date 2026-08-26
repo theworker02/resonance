@@ -1,0 +1,88 @@
+name: Bug Report
+description: Report a bug in Resonance
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear description of the bug.
+      placeholder: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen instead.
+      placeholder: What should have happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Minimal steps to reproduce the behavior.
+      placeholder: |
+        1. Configure node with...
+        2. Run command...
+        3. Observe error...
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which part of the system is affected?
+      options:
+        - Core (crates/resonance-core)
+        - Edge (crates/resonance-edge)
+        - Signal (crates/resonance-signal)
+        - Protocol (crates/resonance-protocol)
+        - Console (apps/console)
+        - CLI (apps/cli)
+        - Simulator (apps/simulator)
+        - Intelligence (intelligence/)
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Resonance Version
+      description: Output of `resonance --version` or the relevant crate version.
+      placeholder: "4.0.0"
+    validations:
+      required: false
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severe is the impact?
+      options:
+        - Critical (system down, data loss)
+        - High (major feature broken, no workaround)
+        - Medium (feature broken, workaround exists)
+        - Low (cosmetic, minor inconvenience)
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, hardware, Rust version, or any relevant environment details.
+      placeholder: |
+        OS: Ubuntu 22.04
+        Rust: 1.75.0
+        Hardware: RN-D1 prototype
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Logs
+      description: Paste any relevant log output (use code blocks).
+      render: shell
+    validations:
+      required: false

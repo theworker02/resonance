@@ -1,0 +1,222 @@
+syntax = "proto3";
+
+package resonance.rep.v1;
+
+option java_package = "io.resonance.rep.v1";
+option java_multiple_files = true;
+option go_package = "github.com/resonance-project/resonance/gen/go/rep/v1;repv1";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REPEvent — a single acoustic incident event produced by an edge sensor node.
+//
+// All fields are required unless marked optional. The `signature` field covers
+// a canonical serialization of all other fields (sorted by field number,
+// deterministic encoding). Receivers MUST verify the signature before trusting
+// any field.
+// ─────────────────────────────────────────────────────────────────────────────
+message REPEvent {
+  // Globally unique event identifier (UUID v4, encoded as a 36-char string).
+  string event_id = 1;
+
+  // REP protocol version (semver string, e.g., "1.0.0").
+  string protocol_version = 2;
+
+  // Sensor that generated this event (UUID v4 string).
+  string sensor_id = 3;
+
+  // UTC timestamp of event onset. ISO 8601 with nanosecond precision.
+  // Example: "2024-06-15T14:23:01.123456789Z"
+  string timestamp_utc = 4;
+
+  // Estimated timing uncertainty in microseconds.
+  double timestamp_uncertainty_us = 5;
+
+  // Duration of the detected acoustic event in milliseconds.
+  double event_duration_ms = 6;
+
+  // SHA-256 hex digest of the normalized feature vector.
+  string acoustic_fingerprint = 7;
+
+  // Version of the feature extraction algorithm used.
+  string feature_vector_version = 8;
+
+  // Peak sound pressure level during the event (dB SPL).
+  double peak_energy_db = 9;
+
+  // Impulse classifier confidence score [0.0, 1.0].
+  double impulse_score = 10;
+
+  // Estimated ambient noise floor at event time (dB SPL).
+  double environmental_noise_db = 11;
+
+  // Signal-to-noise ratio (peak_energy_db - environmental_noise_db).
+  double snr_db = 12;
+
+  // Composite sensor health score [0, 100].
+  double sensor_health_score = 13;
+
+  // Firmware version string of the edge node.
+  string firmware_version = 14;
+
+  // Acoustic model / feature extractor version string.
+  string model_version = 15;
+
+  // Hex-encoded 16-byte random nonce for replay protection.
+  string replay_nonce = 16;
+
+  // Base64-encoded Ed25519 signature over the canonical payload.
+  string signature = 17;
+
+  // Extracted acoustic features. No raw PCM is included.
+  EventFeatures features = 18;
+
+  // True if this event was buffered offline and replayed after reconnect.
+  bool received_late = 19;
+
+  // UTC timestamp when the core infrastructure received this event.
+  // Populated by the core, absent in edge-originated messages.
+  string received_time = 20;
+
+  // ── Environmental baseline annotations (populated by edge learner) ──
+
+  // Long-term learned noise floor for this hour-of-week bucket (dB SPL).
+  double baseline_noise_db = 21;
+
+  // environmental_noise_db minus baseline_noise_db.
+  double deviation_from_baseline_db = 22;
+
+  // True if event occurred during an unusually loud or quiet period.
+  bool is_unusual = 23;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EventFeatures — acoustic feature vector extracted by the privacy kernel.
+// ─────────────────────────────────────────────────────────────────────────────
+message EventFeatures {
+  // RMS energy envelope in 10 ms frames over the event window.
+  repeated double envelope = 1;
+
+  // FFT magnitude spectrum (2048-point Hann-windowed, 1025 bins DC→Nyquist).
+  repeated double spectrum_magnitude = 2;
+
+  // 13 Mel-frequency cepstral coefficients (40 filters, 20–8000 Hz).
+  repeated double mfcc = 3;
+
+  // Spectral centroid in Hz.
+  double spectral_centroid_hz = 4;
+
+  // Spectral rolloff frequency in Hz (85% energy threshold).
+  double spectral_rolloff_hz = 5;
+
+  // Zero-crossing rate [0.0, 1.0] (crossings per sample).
+  double zero_crossing_rate = 6;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REPBatch — a signed batch of events for offline replay.
+//
+// Used when the edge node has been offline and reconnects. All constituent
+// events retain their original timestamps and signatures. The batch itself
+// is also signed.
+// ─────────────────────────────────────────────────────────────────────────────
+message REPBatch {
+  // Unique identifier for this batch (UUID v4).
+  string batch_id = 1;
+
+  // Sensor that produced this batch.
+  string sensor_id = 2;
+
+  // UTC timestamp when the batch was created (at time of reconnect).
+  string created_at = 3;
+
+  // Number of events in this batch.
+  uint32 event_count = 4;
+
+  // The events in chronological order.
+  repeated REPEvent events = 5;
+
+  // Base64-encoded Ed25519 signature over batch_id + sensor_id + created_at
+  // + SHA-256 of the serialized events list.
+  string batch_signature = 6;
+
+  // REP protocol version of the batch envelope.
+  string protocol_version = 7;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REPAck — acknowledgement from the core to the edge for a received event
+// or batch.
+// ─────────────────────────────────────────────────────────────────────────────
+message REPAck {
+  // Echo of the acknowledged event_id or batch_id.
+  string id = 1;
+
+  // Type of the acknowledged item.
+  AckType ack_type = 2;
+
+  // UTC timestamp of acknowledgement.
+  string ack_time = 3;
+
+  // Result of signature and replay-nonce verification.
+  AckStatus status = 4;
+
+  // Human-readable reason string (populated on failure).
+  string reason = 5;
+
+  // Echo of the sensor_id for routing.
+  string sensor_id = 6;
+
+  enum AckType {
+    ACK_TYPE_UNSPECIFIED = 0;
+    ACK_TYPE_EVENT = 1;
+    ACK_TYPE_BATCH = 2;
+  }
+
+  enum AckStatus {
+    ACK_STATUS_UNSPECIFIED = 0;
+    ACK_STATUS_OK = 1;
+    ACK_STATUS_INVALID_SIGNATURE = 2;
+    ACK_STATUS_REPLAY_DETECTED = 3;
+    ACK_STATUS_SCHEMA_ERROR = 4;
+    ACK_STATUS_RATE_LIMITED = 5;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// REPNegotiate — version negotiation handshake between edge and core.
+//
+// The edge sends a REPNegotiate on connection. The core responds with
+// accepted_version or an error. If the core cannot support any version in
+// the edge's offered list, the connection is refused.
+// ─────────────────────────────────────────────────────────────────────────────
+message REPNegotiate {
+  // Sensor UUID.
+  string sensor_id = 1;
+
+  // Ordered list of REP protocol versions the edge supports, newest first.
+  // Example: ["1.0.0"]
+  repeated string offered_versions = 2;
+
+  // The version selected by the core (present in the core's response).
+  string accepted_version = 3;
+
+  // Result of negotiation.
+  NegotiateStatus status = 4;
+
+  // UTC timestamp of the negotiation attempt.
+  string negotiated_at = 5;
+
+  // Firmware version of the edge node (informational).
+  string firmware_version = 6;
+
+  // Human-readable reason on failure.
+  string reason = 7;
+
+  enum NegotiateStatus {
+    NEGOTIATE_STATUS_UNSPECIFIED = 0;
+    NEGOTIATE_STATUS_OK = 1;
+    NEGOTIATE_STATUS_VERSION_MISMATCH = 2;
+    NEGOTIATE_STATUS_SENSOR_UNKNOWN = 3;
+    NEGOTIATE_STATUS_SENSOR_REVOKED = 4;
+  }
+}

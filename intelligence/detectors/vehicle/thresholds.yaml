@@ -1,0 +1,33 @@
+vehicle_crash:
+  min_peak_energy_db: 65.0
+  max_attack_time_ms: 100.0
+  min_spectral_flatness: 0.20
+  min_snr_db: 5.0
+
+vehicle_horn:
+  min_harmonicity: 0.50
+  min_fundamental_hz: 180.0
+  max_fundamental_hz: 900.0
+  min_duration_ms: 200.0
+  max_zcr: 0.30
+
+vehicle_skid:
+  min_spectral_centroid_hz: 800.0
+  max_spectral_centroid_hz: 4500.0
+  min_peak_energy_db: 45.0
+  max_zcr: 0.55
+
+vehicle_engine_rev:
+  min_harmonicity: 0.35
+  min_fundamental_hz: 40.0
+  max_fundamental_hz: 450.0
+  min_duration_ms: 500.0
+
+emergency_siren:
+  min_harmonicity: 0.55
+  min_fm_rate_hz: 0.4
+  max_fm_rate_hz: 4.0
+  min_duration_ms: 800.0
+
+unknown_vehicle:
+  novel_threshold: 0.65

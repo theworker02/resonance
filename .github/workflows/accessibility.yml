@@ -1,0 +1,20 @@
+name: Accessibility
+on:
+  pull_request:
+    paths: ['apps/console/**', 'packages/surface/**']
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - working-directory: apps/console
+        run: npm ci
+      - working-directory: apps/console
+        run: npm run build
+      - name: Run axe-core accessibility checks
+        working-directory: apps/console
+        run: npx @axe-core/cli dist/index.html --exit

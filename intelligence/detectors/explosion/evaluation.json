@@ -1,0 +1,25 @@
+{
+  "dataset": "LargeExplosion-1",
+  "dataset_version": "1.0.0",
+  "evaluated_at": "2024-03-01T00:00:00Z",
+  "model_version": "heuristic-0.5.0",
+  "n_samples": 1080,
+  "n_classes": 4,
+  "overall": {
+    "precision": 0.862,
+    "recall": 0.848,
+    "f1": 0.855,
+    "calibration_error": 0.055,
+    "unknown_recall": 0.810,
+    "false_positive_rate": 0.070,
+    "missed_event_rate": 0.152,
+    "inference_latency_p50_ms": 1.2,
+    "inference_latency_p99_ms": 3.6
+  },
+  "per_class": {
+    "explosion_industrial":  {"precision": 0.872, "recall": 0.858, "f1": 0.865, "n_samples": 360},
+    "explosion_structural":  {"precision": 0.851, "recall": 0.832, "f1": 0.841, "n_samples": 300},
+    "explosion_ordnance":    {"precision": 0.889, "recall": 0.875, "f1": 0.882, "n_samples": 300},
+    "unknown_explosion":     {"precision": 0.801, "recall": 0.810, "f1": 0.805, "n_samples": 120}
+  }
+}

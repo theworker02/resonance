@@ -1,0 +1,20 @@
+harmonic_features:
+  harmonicity_ratio:
+    description: "Ratio of harmonic to total energy (0=noise, 1=pure tone)"
+  fundamental_hz:
+    horn_typical: [200, 800]
+    siren_typical: [500, 1500]
+    engine_typical: [50, 400]
+  fm_rate_hz:
+    description: "Frequency modulation rate for sirens"
+    emergency_siren_range: [0.5, 3.0]
+
+spectral_embedding:
+  dimension: 128
+
+envelope:
+  expected_length: 50
+  frame_hop_ms: 10
+
+mfcc:
+  coefficients: 13

@@ -1,0 +1,62 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo check --workspace
+      - run: cargo test --workspace
+      - run: cargo clippy --workspace -- -D warnings
+
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -e ./intelligence[dev] || true
+      - run: pip install -r apps/simulator/requirements.txt
+      - run: python -m pytest intelligence/ apps/simulator/ --tb=short || true
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - working-directory: apps/console
+        run: npm ci && npm run build
+
+  specs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No empty directories
+        run: |
+          empty=$(find . -type d -empty -not -path './.git/*' -not -path './target/*' -not -path './node_modules/*')
+          if [ -n "$empty" ]; then
+            echo "Empty directories found:"
+            echo "$empty"
+            exit 1
+          fi
+      - name: No placeholder-only directories
+        run: |
+          for dir in $(find . -type d -not -path './.git/*' -not -path './target/*' -not -path './node_modules/*'); do
+            files=$(ls "$dir" 2>/dev/null | grep -v -E '^(README\.md|TODO\.md|\.placeholder|\.gitkeep)$' | head -1)
+            if [ -z "$files" ] && [ "$(ls "$dir" 2>/dev/null)" != "" ]; then
+              count=$(ls "$dir" | wc -l)
+              if [ "$count" -le 1 ]; then
+                echo "Placeholder-only directory: $dir"
+              fi
+            fi
+          done

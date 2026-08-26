@@ -1,0 +1,33 @@
+name: large_explosion
+version: 0.5.0
+description: "Detects large-scale explosion events: industrial accidents, structural demolition detonations, and large ordnance."
+author: "Resonance Contributors"
+license: "Apache-2.0"
+
+inputs:
+  - spectral_embedding
+  - envelope
+  - mfcc
+  - infrasound_features
+
+outputs:
+  - explosion_industrial
+  - explosion_structural
+  - explosion_ordnance
+  - unknown_explosion
+
+prohibited_capabilities: []
+required_capabilities: []
+
+min_snr_db: 5.0
+min_peak_energy_db: 78.0
+
+notes: >
+  Large explosions are distinguished from near/far impulsive events by extremely
+  high peak energy, very long reverb tails (1–10 s), and significant infrasound
+  content below 20 Hz. Industrial explosions (gas leaks, chemical) have a more
+  gradual pressure rise. Structural demolition has multiple distinct phases.
+  Ordnance produces the sharpest attack and highest spectral flatness.
+
+changelog:
+  - "0.5.0: Initial heuristic release"

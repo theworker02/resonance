@@ -1,0 +1,20 @@
+# Signal Processing
+/crates/resonance-signal/     @resonance-project/signal-team
+
+# Hardware
+/hardware/                    @resonance-project/hardware-team
+/specifications/              @resonance-project/hardware-team
+
+# Protocol
+/crates/resonance-protocol/   @resonance-project/protocol-team
+
+# Intelligence / ML
+/intelligence/                @resonance-project/ml-team
+
+# Frontend
+/apps/console/                @resonance-project/frontend-team
+/apps/docs-site/              @resonance-project/frontend-team
+
+# Documentation
+/docs/                        @resonance-project/docs-team
+/brand/                       @resonance-project/docs-team

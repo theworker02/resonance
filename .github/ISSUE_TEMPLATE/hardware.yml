@@ -1,0 +1,83 @@
+name: Hardware Issue
+description: Report a hardware-related issue (specification change, validation result, BOM update)
+labels: [hardware]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Describe the hardware issue, specification change, or validation result.
+      placeholder: What is the hardware issue?
+    validations:
+      required: true
+  - type: dropdown
+    id: node-family
+    attributes:
+      label: Node Family
+      description: Which node family is affected?
+      options:
+        - RN-D1 (Dense Urban)
+        - RN-F1 (Field/Open Area)
+        - RN-P1 (Perimeter/Linear)
+        - All families
+        - Not applicable
+    validations:
+      required: true
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Subsystem
+      description: Which hardware subsystem is affected?
+      options:
+        - Microphone array
+        - Digital signal processor
+        - Compute module
+        - Power supply
+        - Enclosure / mechanical
+        - Connectivity (network, GPS)
+        - Timing (Chronos/PPS)
+        - Environmental sensors
+        - Firmware
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: issue-type
+    attributes:
+      label: Issue Type
+      description: What kind of hardware issue is this?
+      options:
+        - Specification change
+        - Validation failure
+        - BOM update (component change)
+        - Manufacturing issue
+        - Field failure report
+        - Design improvement
+        - Documentation correction
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact Assessment
+      description: What is the impact of this issue on production or development?
+      placeholder: |
+        Affects: [which deployments/prototypes]
+        Severity: [critical/high/medium/low]
+        Workaround: [available/none]
+    validations:
+      required: false
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed Change
+      description: If applicable, describe the proposed specification change or fix.
+    validations:
+      required: false
+  - type: textarea
+    id: validation-data
+    attributes:
+      label: Validation Data
+      description: Attach test results, measurements, or other validation data.
+    validations:
+      required: false

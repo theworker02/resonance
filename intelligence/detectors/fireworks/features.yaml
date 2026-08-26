@@ -1,0 +1,27 @@
+# Feature schema for the fireworks detector
+
+spectral_embedding:
+  dimension: 128
+
+envelope:
+  expected_length: 50
+  frame_hop_ms: 10
+
+impulse_features:
+  attack_time_ms:
+    aerial_burst_range: [5, 80]
+    ground_level_range: [20, 150]
+  secondary_pop_count:
+    description: "Number of secondary pops after initial burst"
+    aerial_burst_min: 2
+  tail_complexity:
+    description: "Entropy of the decay envelope — higher for aerial bursts"
+
+temporal_pattern:
+  inter_event_gap_s:
+    sustained_display_typical: [0.5, 5.0]
+  duration_s:
+    sustained_display_min: 10.0
+
+mfcc:
+  coefficients: 13

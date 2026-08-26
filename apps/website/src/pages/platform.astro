@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Platform" description="The Resonance platform — eight integrated products for spatial acoustic intelligence.">
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-violet/5 via-transparent to-transparent"></div>
+    <div class="relative max-w-7xl mx-auto px-6 pt-32 pb-16 text-center">
+      <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6">
+        The Resonance Platform
+      </h1>
+      <p class="text-xl text-white/60 max-w-3xl mx-auto">
+        Eight integrated products covering the full lifecycle from acoustic wavefront to evidentiary output. 
+        Built on physics, secured by cryptography, connected through spatial intelligence.
+      </p>
+    </div>
+  </section>
+
+  <!-- Product Family -->
+  <section class="max-w-7xl mx-auto px-6 py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+      <!-- Detect -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan/20 to-cyan/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-cyan transition-colors">Resonance Detect</h3>
+            <p class="text-white/50 leading-relaxed">Real-time acoustic event classification using on-device ML inference. Identifies event type, estimates direction of arrival, computes confidence, and generates acoustic fingerprints for correlation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mesh -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet/20 to-violet/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-violet transition-colors">Resonance Mesh</h3>
+            <p class="text-white/50 leading-relaxed">Cross-node spatial correlation engine. Fuses observations from multiple nodes using TDOA, acoustic probability surfaces, and timing-quality-weighted evidence to produce located incidents.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Field -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan/20 to-cyan/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-cyan transition-colors">Resonance Field</h3>
+            <p class="text-white/50 leading-relaxed">Deployment planning and site survey toolkit. Models acoustic propagation, identifies optimal node placement, simulates coverage gaps, and generates installation guides.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fleet -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet/20 to-violet/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-violet transition-colors">Resonance Fleet</h3>
+            <p class="text-white/50 leading-relaxed">Large-scale node management platform. OTA firmware updates, health monitoring, predictive maintenance (NodeCare), capacity planning, and multi-site orchestration.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Evidence -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan/20 to-cyan/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-cyan transition-colors">Resonance Evidence</h3>
+            <p class="text-white/50 leading-relaxed">Cryptographic provenance chain producing tamper-evident, court-admissible evidence packages. Every observation is signed, chained, timestamped, and independently verifiable.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lab -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet/20 to-violet/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-violet transition-colors">Resonance Lab</h3>
+            <p class="text-white/50 leading-relaxed">Research and development environment. Algorithm experimentation, model training pipelines, acoustic dataset management, and A/B testing infrastructure for detection models.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edge -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-cyan/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan/20 to-cyan/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-cyan transition-colors">Resonance Edge</h3>
+            <p class="text-white/50 leading-relaxed">On-node runtime handling audio acquisition, real-time DSP, privacy kernel (speech suppression before storage), local ML inference, and secure observation signing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SDK -->
+      <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-violet/20 transition-all group">
+        <div class="flex items-start gap-5">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet/20 to-violet/5 flex items-center justify-center flex-shrink-0">
+            <svg class="w-7 h-7 text-violet" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2 group-hover:text-violet transition-colors">Resonance SDK</h3>
+            <p class="text-white/50 leading-relaxed">Public developer library for building custom acoustic detectors. Provides signal processing primitives, feature extraction, the DetectorInterface trait, and testing utilities.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Architecture Diagram -->
+  <section class="max-w-7xl mx-auto px-6 py-24">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold mb-4">Architecture</h2>
+      <p class="text-white/50 max-w-2xl mx-auto">How the products connect. Edge nodes feed the platform, which correlates and fuses into incidents available through the API.</p>
+    </div>
+    <div class="p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 items-center">
+        <!-- Edge Layer -->
+        <div class="text-center p-4 rounded-xl border border-cyan/20 bg-cyan/5">
+          <p class="text-xs text-cyan/60 uppercase tracking-wide mb-2">Edge Layer</p>
+          <p class="font-semibold text-sm">VectorNode X1</p>
+          <p class="text-xs text-white/40 mt-1">Acquire + DSP + Detect + Sign</p>
+        </div>
+        <!-- Arrow -->
+        <div class="hidden lg:flex items-center justify-center">
+          <div class="flex items-center gap-1">
+            <div class="w-12 h-px bg-gradient-to-r from-cyan to-violet"></div>
+            <svg class="w-3 h-3 text-violet" fill="currentColor" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"></path></svg>
+          </div>
+        </div>
+        <!-- Platform -->
+        <div class="text-center p-4 rounded-xl border border-violet/20 bg-violet/5">
+          <p class="text-xs text-violet/60 uppercase tracking-wide mb-2">Platform</p>
+          <p class="font-semibold text-sm">Mesh + Correlate + Fuse</p>
+          <p class="text-xs text-white/40 mt-1">Cells, TDOA, APS, Incidents</p>
+        </div>
+        <!-- Arrow -->
+        <div class="hidden lg:flex items-center justify-center">
+          <div class="flex items-center gap-1">
+            <div class="w-12 h-px bg-gradient-to-r from-violet to-cyan"></div>
+            <svg class="w-3 h-3 text-cyan" fill="currentColor" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5v10z"></path></svg>
+          </div>
+        </div>
+        <!-- Output -->
+        <div class="text-center p-4 rounded-xl border border-cyan/20 bg-cyan/5">
+          <p class="text-xs text-cyan/60 uppercase tracking-wide mb-2">Output</p>
+          <p class="font-semibold text-sm">API + Evidence + Fleet</p>
+          <p class="text-xs text-white/40 mt-1">REST, WebSocket, Provenance</p>
+        </div>
+      </div>
+      <div class="mt-6 pt-6 border-t border-white/5 grid grid-cols-3 gap-4 text-center text-xs text-white/40">
+        <div>
+          <span class="text-cyan font-medium">NATS</span> — message bus
+        </div>
+        <div>
+          <span class="text-violet font-medium">PostgreSQL</span> — persistence
+        </div>
+        <div>
+          <span class="text-cyan font-medium">REP</span> — event protocol
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,25 @@
+Part,Manufacturer,Part Number,Quantity,Unit Cost USD,Description
+Compute Module,Radxa,CM5-8G,1,89.00,RK3588S SoM with 8GB LPDDR5 and 64GB eMMC
+MEMS Microphone,TDK InvenSense,ICS-43434,8,2.50,I2S digital MEMS microphone SNR 65dB AOP 116dB SPL
+GNSS Module,u-blox,ZED-F9P,1,42.00,Multi-band RTK GNSS receiver with PPS output
+Secure Element,Microchip,ATECC608B-MAHDA-S,1,0.85,Hardware crypto engine with secure key storage
+IMU,TDK InvenSense,ICM-42688-P,1,4.20,6-axis accelerometer + gyroscope 1kHz FIFO
+Magnetometer,QST Corporation,QMC5883L,1,0.65,3-axis digital compass I2C
+Environmental Sensor,Bosch Sensortec,BME280,1,2.80,Temperature + humidity + pressure I2C/SPI
+LTE Modem,Quectel,EC25-G,1,28.00,LTE Cat-4 modem with GNSS fallback mini-PCIe
+PoE Module,Silvertel,Ag5800,1,18.50,IEEE 802.3at PoE+ PD module 30W 12V output
+DC-DC Converter,Texas Instruments,TPS563201,2,1.10,3.3V and 1.8V step-down regulator 3A
+I2S Audio Codec,Texas Instruments,TLV320ADC3101,2,4.50,Stereo I2S ADC for 4-channel mic input per chip
+Carrier Board PCB,Custom,RN-EDGE-CARRIER-R1,1,22.00,6-layer FR4 carrier board with RF shielding
+GNSS Antenna,Taoglas,CGGBP.25.4.A.02,1,8.50,Active multi-band GNSS patch antenna
+LTE Antenna,Taoglas,FXP840.07.0100A,1,5.20,Flexible LTE/5G antenna with U.FL connector
+Enclosure,Custom,RN-EDGE-ENC-AL67,1,45.00,CNC aluminium IP67 enclosure 200x150x80mm
+Acoustic Membrane,Gore,PMF100,1,6.00,PTFE acoustic vent membrane IP67 rated
+Gaskets and seals,Various,N/A,1,3.50,Silicone O-rings and cable glands
+Connectors,Amphenol,M12-8P-X,2,4.80,M12 X-coded 8-pin Ethernet + power connector
+MicroSD Socket,Molex,104031-0811,1,0.45,Push-push microSD card socket
+SIM Holder,Molex,78800-0001,1,0.60,Nano-SIM push-push holder
+Thermal Interface,Henkel Bergquist,GP5000S35,1,2.20,Thermal gap pad 2.0W/mK 1.0mm thick
+Mounting Hardware,Various,N/A,1,5.00,Stainless pole clamp and wall bracket kit
+Status LEDs,Würth Elektronik,150141GS73100A,4,0.15,Green 0603 LED with integrated resistor
+ESD Protection,Nexperia,PRTR5V0U2X,4,0.25,USB/I2S ESD protection TVS array
