@@ -11,7 +11,7 @@ name = "resonance-edge"
 path = "src/main.rs"
 
 [dependencies]
-resonance-sdk = { path = "../sdk" }
+resonance-sdk = { path = "../sdk", version = "4.0.0" }
 tokio = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
