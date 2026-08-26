@@ -3,6 +3,6 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   integrations: [tailwind()],
-  site: 'https://resonance-project.github.io',
+  site: 'https://theworker02.github.io',
   base: '/resonance',
 });
