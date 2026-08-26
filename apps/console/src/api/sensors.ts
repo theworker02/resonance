@@ -3,7 +3,7 @@ import type {
   SensorDetail,
   SensorListResponse,
   SensorHealthHistory,
-} from '../../../../console/src/types/sensor'
+} from '../types/sensor'
 
 export interface SensorListParams {
   status?: string

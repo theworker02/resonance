@@ -6,7 +6,7 @@ const MOCK_EDGES: (PropagationEdge & { cell_label: string })[] = Array.from({ le
   const cellIdx = Math.floor(i / 6)
   const pairIdx = i % 6
   const pairs = [['nw','ne'],['nw','se'],['nw','sw'],['ne','se'],['ne','sw'],['se','sw']]
-  const [a, b] = pairs[pairIdx]
+  const [_a, _b] = pairs[pairIdx]
   return {
     sensor_a: `sensor-${String(cellIdx * 4 + 1).padStart(4, '0')}`,
     sensor_b: `sensor-${String(cellIdx * 4 + pairIdx % 4 + 1).padStart(4, '0')}`,

@@ -7,7 +7,7 @@ import {
   verifyProvenanceChain,
   type IncidentListParams,
 } from '../api/incidents'
-import type { HumanReviewRequest } from '../../../../console/src/types/incident'
+import type { HumanReviewRequest } from '../types/incident'
 
 export const incidentKeys = {
   all: ['incidents'] as const,

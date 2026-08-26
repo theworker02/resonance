@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import type { CellCalibrationState, CalibrationDimension } from '../types/mesh'
-import { CalibrationBar } from '../../../../console/src/components/mesh/CalibrationBar'
+import { CalibrationBar } from '../components/mesh/CalibrationBar'
 
 // Mock data
 const MOCK_CALIBRATIONS: CellCalibrationState[] = Array.from({ length: 12 }, (_, i) => {

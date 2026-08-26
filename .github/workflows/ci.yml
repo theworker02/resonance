@@ -37,4 +37,4 @@ jobs:
       - working-directory: apps/console
         run: npm install
       - working-directory: apps/console
-        run: npx tsc --noEmit || true
+        run: npx tsc --noEmit 2>&1 | head -50 || true

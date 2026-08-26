@@ -5,7 +5,7 @@ import type {
   HumanReviewRequest,
   HumanReview,
   AuditEntry,
-} from '../../../../console/src/types/incident'
+} from '../types/incident'
 
 export interface IncidentListParams {
   status?: string
