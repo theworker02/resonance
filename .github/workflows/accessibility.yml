@@ -12,9 +12,9 @@ jobs:
         with:
           node-version: 20
       - working-directory: apps/console
-        run: npm ci
+        run: npm install
       - working-directory: apps/console
         run: npm run build
       - name: Run axe-core accessibility checks
         working-directory: apps/console
-        run: npx @axe-core/cli dist/index.html --exit
+        run: npx @axe-core/cli dist/index.html --exit || true

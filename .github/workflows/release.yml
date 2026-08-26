@@ -24,11 +24,11 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
-      - run: cargo build --release --target ${{ matrix.target }} -p resonance-cli
+      - run: cargo build --release --target ${{ matrix.target }} -p resonance-edge
       - uses: actions/upload-artifact@v4
         with:
-          name: resonance-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/resonance*
+          name: resonance-edge-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/resonance-edge*
 
   release:
     needs: build
@@ -38,5 +38,5 @@ jobs:
       - uses: actions/download-artifact@v4
       - uses: softprops/action-gh-release@v2
         with:
-          files: resonance-*/*
+          files: resonance-edge-*/*
           generate_release_notes: true
