@@ -3,6 +3,7 @@ name = "resonance-platform"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Resonance core platform — spatial cells, correlation, incidents, provenance, API"
 
 [dependencies]

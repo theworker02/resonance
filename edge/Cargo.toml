@@ -3,6 +3,7 @@ name = "resonance-edge"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
+repository.workspace = true
 description = "Resonance edge node runtime — acquisition, DSP, privacy kernel, VectorNode driver"
 
 [[bin]]
