@@ -1,4 +1,4 @@
-[workspace]
+﻿[workspace]
 members = [
     "platform",
     "edge",
@@ -10,7 +10,7 @@ resolver = "2"
 version = "4.0.0"
 edition = "2021"
 authors = ["Resonance Contributors"]
-license = "Apache-2.0"
+license = "LicenseRef-Proprietary"
 repository = "https://github.com/theworker02/resonance"
 description = "Open spatial acoustic intelligence infrastructure"
 

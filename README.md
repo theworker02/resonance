@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
   <img src="brand/logo.svg" alt="Resonance" width="96" />
 </p>
 
@@ -24,28 +24,28 @@
 
 ## What Is Resonance?
 
-Resonance is an open-source platform for detecting, localizing, and explaining high-energy acoustic events — gunshots, explosions, vehicle impacts, glass breaking — using networks of calibrated sensor arrays.
+Resonance is an open-source platform for detecting, localizing, and explaining high-energy acoustic events â€” gunshots, explosions, vehicle impacts, glass breaking â€” using networks of calibrated sensor arrays.
 
 Unlike conventional systems that output a single coordinate and a binary classification, Resonance produces:
 
-- **Probabilistic spatial regions** — not a deceptively precise pin on a map
-- **Multi-dimensional confidence breakdowns** — not a single opaque percentage
-- **Competing hypotheses** — always shows what else the sound could have been
-- **Cryptographic provenance** — every step is auditable and deterministically replayable
-- **Explicit uncertainty** — if the evidence is ambiguous, the system says so
+- **Probabilistic spatial regions** â€” not a deceptively precise pin on a map
+- **Multi-dimensional confidence breakdowns** â€” not a single opaque percentage
+- **Competing hypotheses** â€” always shows what else the sound could have been
+- **Cryptographic provenance** â€” every step is auditable and deterministically replayable
+- **Explicit uncertainty** â€” if the evidence is ambiguous, the system says so
 
-The architecture is designed so that speech recognition, speaker identification, and continuous surveillance are **structurally impossible** — enforced at the type system and protocol level, not merely by policy.
+The architecture is designed so that speech recognition, speaker identification, and continuous surveillance are **structurally impossible** â€” enforced at the type system and protocol level, not merely by policy.
 
 ---
 
 ## Architecture
 
 ```
-┌─────────────────┐    ┌────────────────┐    ┌─────────────────┐    ┌────────────────────┐    ┌──────────────────┐
-│   VectorNode    │───▶│  Spatial Cell  │───▶│    WaveGraph    │───▶│ Probability Surface │───▶│  Evidence Fusion  │
-│   (edge DSP)   │    │  (4-8 nodes)   │    │  (propagation)  │    │   (uncertainty)     │    │   (confidence)    │
-└─────────────────┘    └────────────────┘    └─────────────────┘    └────────────────────┘    └──────────────────┘
-        │                      │                      │                        │                        │
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚   VectorNode    â”‚â”€â”€â”€â–¶â”‚  Spatial Cell  â”‚â”€â”€â”€â–¶â”‚    WaveGraph    â”‚â”€â”€â”€â–¶â”‚ Probability Surface â”‚â”€â”€â”€â–¶â”‚  Evidence Fusion  â”‚
+â”‚   (edge DSP)   â”‚    â”‚  (4-8 nodes)   â”‚    â”‚  (propagation)  â”‚    â”‚   (uncertainty)     â”‚    â”‚   (confidence)    â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+        â”‚                      â”‚                      â”‚                        â”‚                        â”‚
   VectorWave DOA         Multi-node            Learned acoustic          Spatial probability       Calibrated
   feature extraction     TDOA + overlap        path modeling             density estimates         output + audit
 ```
@@ -54,27 +54,27 @@ The full measurement pipeline:
 
 ```
 Pressure Wave
-     ↓
+     â†“
 Multi-channel synchronized acquisition
-     ↓
+     â†“
 Wavefront reconstruction (VectorWave)
-     ↓
+     â†“
 Direction-of-arrival ensemble
-     ↓
+     â†“
 Atmospheric correction (Chronos + Atmos)
-     ↓
+     â†“
 Direct/reflected path decomposition (EchoGraph)
-     ↓
+     â†“
 Cross-node temporal correlation
-     ↓
+     â†“
 Acoustic Probability Surface calculation
-     ↓
+     â†“
 Acoustic fingerprint comparison (WavePrint)
-     ↓
+     â†“
 Classification ensemble
-     ↓
+     â†“
 Evidence fusion (ConflictGuard + Scene Health)
-     ↓
+     â†“
 Auditable Incident Record
 ```
 
@@ -122,70 +122,70 @@ resonance-sdk = "4.0"
 |---|---|---|
 | Localization output | Single coordinate | Acoustic Probability Surface with explicit uncertainty |
 | Confidence reporting | Single percentage | Multi-dimensional breakdown (classifier, agreement, timing, signal, environment) |
-| Privacy | Policy-based | Architecturally enforced — no raw audio protocol fields exist |
+| Privacy | Policy-based | Architecturally enforced â€” no raw audio protocol fields exist |
 | Hardware | Proprietary black box | Open specification, any manufacturer can build |
 | Auditability | Vendor report | Cryptographic provenance chain, deterministic replay |
-| Environmental compensation | Not core | Native — wind, temperature, humidity correct every estimate |
+| Environmental compensation | Not core | Native â€” wind, temperature, humidity correct every estimate |
 | Reflection handling | Ignored or confused | EchoGraph explicitly models multi-path propagation |
 | Contradiction detection | Hidden in averaging | ConflictGuard surfaces disagreements, caps confidence |
-| Offline operation | Cloud-dependent | Edge-first — full detection continues without connectivity |
-| Detector development | Vendor-only | Open SDK — third parties can build detector modules |
-| Mixed hardware | Fleet replacement required | Protocol-based — different node generations interoperate |
+| Offline operation | Cloud-dependent | Edge-first â€” full detection continues without connectivity |
+| Detector development | Vendor-only | Open SDK â€” third parties can build detector modules |
+| Mixed hardware | Fleet replacement required | Protocol-based â€” different node generations interoperate |
 
 ---
 
 ## Platform Components
 
-### Signal Processing — `resonance-sdk`
+### Signal Processing â€” `resonance-sdk`
 
 The signal intelligence layer operates on multi-channel acoustic data to produce directional observations with explicit uncertainty.
 
-- **VectorWave** — direction-of-arrival estimation combining GCC-PHAT cross-correlation with delay-and-sum beamforming. Produces bearing vectors with 95% confidence intervals. Never claims precision the physics doesn't support.
-- **WavePrint** — perceptual acoustic fingerprinting that captures envelope shape, spectral distribution, impulse width, spectral decay, and temporal profile. Survives propagation differences between sensors.
-- **EchoGraph** — multi-path decomposition that separates direct arrivals from reflections. Learns reflection surfaces over time. Late arrivals are analyzed, not discarded.
-- **Acoustic Probability Surface (APS)** — continuous spatial probability field over a geographic grid. Replaces point estimates with probabilistic regions showing containment areas.
-- **ConflictGuard** — automatic contradiction detection. If sensors disagree on direction, timing, or classification, confidence is capped proportionally rather than hidden in an average.
-- **Scene Health** — assesses whether environmental conditions (wind, rain, noise floor, sensor availability) support reliable analysis. Poor conditions automatically cap achievable confidence.
-- **Confidence Timeline** — tracks how confidence evolves as evidence arrives. Shows whether the final score was stable or dependent on one late observation.
-- **Feature Extraction** — FFT spectrum, 13 MFCCs, spectral centroid/rolloff, zero-crossing rate, envelope analysis, SHA-256 acoustic fingerprint.
+- **VectorWave** â€” direction-of-arrival estimation combining GCC-PHAT cross-correlation with delay-and-sum beamforming. Produces bearing vectors with 95% confidence intervals. Never claims precision the physics doesn't support.
+- **WavePrint** â€” perceptual acoustic fingerprinting that captures envelope shape, spectral distribution, impulse width, spectral decay, and temporal profile. Survives propagation differences between sensors.
+- **EchoGraph** â€” multi-path decomposition that separates direct arrivals from reflections. Learns reflection surfaces over time. Late arrivals are analyzed, not discarded.
+- **Acoustic Probability Surface (APS)** â€” continuous spatial probability field over a geographic grid. Replaces point estimates with probabilistic regions showing containment areas.
+- **ConflictGuard** â€” automatic contradiction detection. If sensors disagree on direction, timing, or classification, confidence is capped proportionally rather than hidden in an average.
+- **Scene Health** â€” assesses whether environmental conditions (wind, rain, noise floor, sensor availability) support reliable analysis. Poor conditions automatically cap achievable confidence.
+- **Confidence Timeline** â€” tracks how confidence evolves as evidence arrives. Shows whether the final score was stable or dependent on one late observation.
+- **Feature Extraction** â€” FFT spectrum, 13 MFCCs, spectral centroid/rolloff, zero-crossing rate, envelope analysis, SHA-256 acoustic fingerprint.
 
-### Spatial Intelligence — `resonance-platform`
+### Spatial Intelligence â€” `resonance-platform`
 
 The backend brain that correlates observations from multiple nodes into incidents.
 
-- **Chronos** — precision timing management. Tracks GNSS PPS quality, oscillator holdover, clock drift. Weights observations by timing reliability.
-- **Atmosphere Engine** — computes speed of sound from measured temperature. Applies wind correction to DOA estimates. Never hardcodes 343 m/s.
-- **NodeCare** — predictive maintenance scoring. Analyzes microphone health, clock drift, calibration age, thermal state, enclosure humidity. Generates maintenance predictions before failure.
-- **Spatial Cells** — geographic regions served by sensor groups. Support 4-node nominal, 3-node degraded, 2-node observation modes.
-- **Provenance Chain** — cryptographic hash chain of every processing step. Enables deterministic replay and independent verification.
-- **Incident Lifecycle** — explicit state machine: candidate → active → reviewing → confirmed/rejected → closed.
+- **Chronos** â€” precision timing management. Tracks GNSS PPS quality, oscillator holdover, clock drift. Weights observations by timing reliability.
+- **Atmosphere Engine** â€” computes speed of sound from measured temperature. Applies wind correction to DOA estimates. Never hardcodes 343 m/s.
+- **NodeCare** â€” predictive maintenance scoring. Analyzes microphone health, clock drift, calibration age, thermal state, enclosure humidity. Generates maintenance predictions before failure.
+- **Spatial Cells** â€” geographic regions served by sensor groups. Support 4-node nominal, 3-node degraded, 2-node observation modes.
+- **Provenance Chain** â€” cryptographic hash chain of every processing step. Enables deterministic replay and independent verification.
+- **Incident Lifecycle** â€” explicit state machine: candidate â†’ active â†’ reviewing â†’ confirmed/rejected â†’ closed.
 
-### Edge Runtime — `resonance-edge`
+### Edge Runtime â€” `resonance-edge`
 
 The firmware running on each sensor node.
 
-- **Hardware Abstraction Layer** — traits for AudioDevice, ClockSource, LocationProvider, HardwareHealth. Linux and Simulator backends included.
-- **DSP Pipeline** — normalizer (calibration + noise floor estimation) → impulse detector (hysteresis state machine) → feature extractor.
-- **Privacy Kernel** — compile-time prohibited capabilities. Raw audio stays in a 5-second ring buffer and never crosses the privacy boundary. Only extracted features are transmitted.
-- **REP Publisher** — Ed25519-signed observations with replay-nonce protection. Offline queue with automatic reconnect replay.
-- **Health Monitor** — composite health scoring with automatic degradation detection.
+- **Hardware Abstraction Layer** â€” traits for AudioDevice, ClockSource, LocationProvider, HardwareHealth. Linux and Simulator backends included.
+- **DSP Pipeline** â€” normalizer (calibration + noise floor estimation) â†’ impulse detector (hysteresis state machine) â†’ feature extractor.
+- **Privacy Kernel** â€” compile-time prohibited capabilities. Raw audio stays in a 5-second ring buffer and never crosses the privacy boundary. Only extracted features are transmitted.
+- **REP Publisher** â€” Ed25519-signed observations with replay-nonce protection. Offline queue with automatic reconnect replay.
+- **Health Monitor** â€” composite health scoring with automatic degradation detection.
 
-### Cloud Platform — `apps/cloud/`
+### Cloud Platform â€” `apps/cloud/`
 
 Multi-tenant SaaS control plane built with Fastify + TypeScript.
 
-- **Multi-tenancy** — Organization → Workspace → Deployment hierarchy with enforced tenant isolation
-- **RBAC** — 8 roles (Owner, Administrator, Engineer, Operator, Reviewer, Technician, Researcher, Viewer) with 30+ granular permissions
-- **Authentication** — JWT with refresh tokens, API keys with scopes, webhook signing
-- **Event-Driven** — typed domain events bus enabling real-time UI, audit logging, and webhook delivery
-- **Background Jobs** — BullMQ queues with exponential backoff, jitter, and dead-letter handling
-- **State Machines** — explicit lifecycle states for nodes, incidents, models, and deployments with validated transitions
-- **Alerting** — policy-based alert engine with conditions, routing (email/Slack/Teams/webhook), and cooldown
-- **Configuration Versioning** — every config change gets a version, diff, author, and reason. Supports rollback.
-- **Feature Flags** — centralized flag system with boolean, percentage rollout, and org/workspace targeting
-- **Data Retention** — configurable lifecycle tiers (hot → warm → archive → delete) per resource type
+- **Multi-tenancy** â€” Organization â†’ Workspace â†’ Deployment hierarchy with enforced tenant isolation
+- **RBAC** â€” 8 roles (Owner, Administrator, Engineer, Operator, Reviewer, Technician, Researcher, Viewer) with 30+ granular permissions
+- **Authentication** â€” JWT with refresh tokens, API keys with scopes, webhook signing
+- **Event-Driven** â€” typed domain events bus enabling real-time UI, audit logging, and webhook delivery
+- **Background Jobs** â€” BullMQ queues with exponential backoff, jitter, and dead-letter handling
+- **State Machines** â€” explicit lifecycle states for nodes, incidents, models, and deployments with validated transitions
+- **Alerting** â€” policy-based alert engine with conditions, routing (email/Slack/Teams/webhook), and cooldown
+- **Configuration Versioning** â€” every config change gets a version, diff, author, and reason. Supports rollback.
+- **Feature Flags** â€” centralized flag system with boolean, percentage rollout, and org/workspace targeting
+- **Data Retention** â€” configurable lifecycle tiers (hot â†’ warm â†’ archive â†’ delete) per resource type
 
-### Design System — `packages/surface/`
+### Design System â€” `packages/surface/`
 
 The visual language for all Resonance interfaces.
 
@@ -210,19 +210,19 @@ We publish open reference designs so that hardware partners, contract manufactur
 | **RN-P1** | Research / precision timing | Instrumentation companies, national labs |
 
 The VectorNode X1 reference design includes:
-- 8–12 synchronized acoustic channels + precision pressure reference
+- 8â€“12 synchronized acoustic channels + precision pressure reference
 - Ultrasonic 2D wind vector sensor
 - Temperature, humidity, barometric pressure
-- Multi-constellation GNSS with PPS (≤100ns accuracy)
+- Multi-constellation GNSS with PPS (â‰¤100ns accuracy)
 - ARM64 compute with optional NPU
 - Secure element for device identity
-- IP67 enclosure rated -30°C to +60°C
+- IP67 enclosure rated -30Â°C to +60Â°C
 
-All hardware designs are published under **CERN Open Hardware Licence v2 — Permissive**.
+All hardware designs are published under **CERN Open Hardware Licence v2 â€” Permissive**.
 
-→ [Full VectorNode X1 specification](specifications/RES-HW-VECTORNODE-X1.md)  
-→ [Manufacturing plan for contract manufacturers](hardware/MANUFACTURING_PLAN.md)  
-→ [Reference BOM and node family definitions](hardware/reference-node/)
+â†’ [Full VectorNode X1 specification](specifications/RES-HW-VECTORNODE-X1.md)  
+â†’ [Manufacturing plan for contract manufacturers](hardware/MANUFACTURING_PLAN.md)  
+â†’ [Reference BOM and node family definitions](hardware/reference-node/)
 
 ---
 
@@ -244,7 +244,7 @@ cd apps/cloud && npm install && npm run dev
 
 # Open the console
 cd apps/console && npm install && npm run dev
-# → http://localhost:3000
+# â†’ http://localhost:3000
 ```
 
 ### Using the SDK in your own project
@@ -296,7 +296,7 @@ The simulator models realistic acoustic propagation (inverse-square law + atmosp
 
 Resonance is architecturally incapable of mass surveillance.
 
-The system processes only acoustic features extracted on-device — raw audio never traverses the network. The hardware and software are co-designed to make surveillance physically impossible, not merely policy-prohibited.
+The system processes only acoustic features extracted on-device â€” raw audio never traverses the network. The hardware and software are co-designed to make surveillance physically impossible, not merely policy-prohibited.
 
 | Prohibition | Enforcement mechanism |
 |---|---|
@@ -313,17 +313,17 @@ Privacy attestations are cryptographically signed by each node and independently
 
 ## Security
 
-- **Per-device Ed25519 identity** — every sensor has a unique keypair generated at first boot
-- **Signed observations** — every REP message carries an Ed25519 signature; backends reject unsigned data
-- **Replay protection** — random 16-byte nonce per event prevents replay attacks
-- **Secure boot chain** — ROM → signed bootloader → signed firmware → verified services
-- **Hardware root of trust** — TPM/secure element for key storage and attestation
-- **Tenant isolation** — multi-tenant data access enforced at the query layer, not just the frontend
-- **Audit trail** — append-only cryptographic chain for every significant action
+- **Per-device Ed25519 identity** â€” every sensor has a unique keypair generated at first boot
+- **Signed observations** â€” every REP message carries an Ed25519 signature; backends reject unsigned data
+- **Replay protection** â€” random 16-byte nonce per event prevents replay attacks
+- **Secure boot chain** â€” ROM â†’ signed bootloader â†’ signed firmware â†’ verified services
+- **Hardware root of trust** â€” TPM/secure element for key storage and attestation
+- **Tenant isolation** â€” multi-tenant data access enforced at the query layer, not just the frontend
+- **Audit trail** â€” append-only cryptographic chain for every significant action
 
-→ [Threat model](docs/security/threat-model.md)  
-→ [Secure boot specification](docs/security/secure-boot.md)  
-→ [Fleet identity management](docs/security/fleet-identity.md)
+â†’ [Threat model](docs/security/threat-model.md)  
+â†’ [Secure boot specification](docs/security/secure-boot.md)  
+â†’ [Fleet identity management](docs/security/fleet-identity.md)
 
 ---
 
@@ -332,7 +332,7 @@ Privacy attestations are cryptographically signed by each node and independently
 | Document | Description |
 |----------|-------------|
 | [VectorNode X1 Hardware Spec](specifications/RES-HW-VECTORNODE-X1.md) | 30+ formal requirements with measurement methods and validation procedures |
-| [REP Protocol Specification](specifications/REP-SPEC.md) | Wire protocol for sensor → platform communication |
+| [REP Protocol Specification](specifications/REP-SPEC.md) | Wire protocol for sensor â†’ platform communication |
 | [OpenAPI v1](specifications/api-v1.yaml) | Complete REST + WebSocket API specification |
 | [rep.proto](specifications/rep.proto) | Protobuf3 schema for REP messages |
 | [rep_schema.json](specifications/rep_schema.json) | JSON Schema for REP event validation |
@@ -343,21 +343,21 @@ Privacy attestations are cryptographically signed by each node and independently
 
 ```
 resonance/
-├── platform/         Rust — spatial intelligence, correlation, incidents, API
-├── edge/             Rust — sensor node runtime, DSP, privacy kernel
-├── sdk/              Rust — signal processing library and detector SDK
-├── intelligence/     Python — ML detector packs and ensemble
-├── apps/
-│   ├── cloud/        TypeScript — multi-tenant SaaS control plane
-│   ├── console/      React — operator dashboard
-│   └── website/      Astro — GitHub Pages product site
-├── packages/
-│   └── surface/      TypeScript — design system tokens and component contracts
-├── hardware/         Reference designs, BOMs, manufacturing plan
-├── specifications/   Engineering specs, OpenAPI, protocol definitions
-├── simulator/        Python — virtual acoustic mesh
-├── docs/             Architecture, security, privacy, ADRs, design specs
-└── .github/          CI workflows, issue templates, CODEOWNERS
+â”œâ”€â”€ platform/         Rust â€” spatial intelligence, correlation, incidents, API
+â”œâ”€â”€ edge/             Rust â€” sensor node runtime, DSP, privacy kernel
+â”œâ”€â”€ sdk/              Rust â€” signal processing library and detector SDK
+â”œâ”€â”€ intelligence/     Python â€” ML detector packs and ensemble
+â”œâ”€â”€ apps/
+â”‚   â”œâ”€â”€ cloud/        TypeScript â€” multi-tenant SaaS control plane
+â”‚   â”œâ”€â”€ console/      React â€” operator dashboard
+â”‚   â””â”€â”€ website/      Astro â€” GitHub Pages product site
+â”œâ”€â”€ packages/
+â”‚   â””â”€â”€ surface/      TypeScript â€” design system tokens and component contracts
+â”œâ”€â”€ hardware/         Reference designs, BOMs, manufacturing plan
+â”œâ”€â”€ specifications/   Engineering specs, OpenAPI, protocol definitions
+â”œâ”€â”€ simulator/        Python â€” virtual acoustic mesh
+â”œâ”€â”€ docs/             Architecture, security, privacy, ADRs, design specs
+â””â”€â”€ .github/          CI workflows, issue templates, CODEOWNERS
 ```
 
 ---
@@ -383,9 +383,9 @@ resonance/
 
 See [`ROADMAP.md`](ROADMAP.md) for the full roadmap. Current focus:
 
-**v4.0** (current) — Platform architecture, signal processing, multi-tenant cloud, design system  
-**v4.1** — First prototype PCB, hardware-in-the-loop, fleet manager, public benchmarks  
-**v5.0** — Production hardware certification, multi-region, federated learning
+**v4.0** (current) â€” Platform architecture, signal processing, multi-tenant cloud, design system  
+**v4.1** â€” First prototype PCB, hardware-in-the-loop, fleet manager, public benchmarks  
+**v5.0** â€” Production hardware certification, multi-region, federated learning
 
 ---
 
@@ -421,7 +421,7 @@ If you use Resonance in research, please cite:
   year      = {2026},
   url       = {https://github.com/theworker02/resonance},
   version   = {4.0.0},
-  license   = {Apache-2.0}
+  license   = {source-available proprietary}
 }
 ```
 
@@ -429,13 +429,5 @@ If you use Resonance in research, please cite:
 
 ## License
 
-- **Software**: [Apache License 2.0](LICENSE)
-- **Hardware reference designs**: [CERN Open Hardware Licence v2 — Permissive](https://ohwr.org/cern_ohl_p_v2.txt)
-- **Documentation**: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+**Source-available proprietary** — evaluation under [LICENSE](./LICENSE); commercial / production use via [COMMERCIAL.md](./COMMERCIAL.md). See [LICENSE_TRANSITION_NOTICE.md](./LICENSE_TRANSITION_NOTICE.md) and [NOTICE](./NOTICE).
 
----
-
-<p align="center">
-  <sub>Resonance does not manufacture hardware, operate sensor networks, or provide surveillance services.<br/>
-  It is a software framework that enables transparent, auditable acoustic event detection.</sub>
-</p>
