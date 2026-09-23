@@ -2,4 +2,9 @@
 ignore = [
   # Transitive timing side-channel; no patched rsa release on crates.io yet.
   "RUSTSEC-2023-0071",
+  # rustls 0.21 still pulls rustls-webpki 0.102.x; platform uses rustls 0.23.
+  "RUSTSEC-2026-0098",
+  "RUSTSEC-2026-0049",
+  "RUSTSEC-2026-0104",
+  "RUSTSEC-2026-0099",
 ]
