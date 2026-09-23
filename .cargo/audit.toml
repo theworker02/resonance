@@ -1,0 +1,5 @@
+[advisories]
+ignore = [
+  # Transitive timing side-channel; no patched rsa release on crates.io yet.
+  "RUSTSEC-2023-0071",
+]
